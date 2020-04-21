@@ -1,0 +1,13 @@
+.router-view {
+    
+}
+.router-view-content {
+    /* background-color: #f6f8fa; */
+    /* background-color: #F5F5F5; */
+    background-color: lightblue;
+    padding: 20px;
+}
+.router-view-sider {
+    background-color: #fff;
+    min-height: 540px;
+}

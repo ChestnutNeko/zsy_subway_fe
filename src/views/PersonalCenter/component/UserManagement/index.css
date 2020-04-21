@@ -1,0 +1,23 @@
+.user-management {
+    margin: 0 20px;
+    width: 100%;
+}
+.user-management-content {
+    margin-top: 10px;
+}
+.user-management-echart {
+    padding: 20px;
+    height: 500px;
+    background-color: #fff;
+}
+.user-management-header {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    margin: 10px 0 5px 0;
+}
+.user-management-table {
+    padding: 0 20px 0 0;
+    background-color: #fff;
+}

@@ -1,0 +1,82 @@
+.personal-info {
+    margin: 0 20px;
+    width: 100%;
+}
+.personal-info-content {
+    margin-top: 10px;
+}
+.personal-info-title {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 3px;
+}
+.personal-info-title-bar {
+    width: 10px;
+    height: 100px;
+    border-radius: 3px 0 0 3px;
+    background-color: #364d79;
+}
+.personal-info-title-avatar {
+    margin-left: 20px;
+}
+.personal-info-title-user {
+    margin-left: 20px;
+}
+.personal-info-title-name {
+    font-size: 14px;
+    color: #418ac3;
+    cursor: pointer;
+}
+.personal-info-title-other {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.personal-info-title-info {
+    margin-right: 10px;
+}
+.personal-info-title-button {
+    margin-left: auto;
+    padding-right: 40px;
+}
+.modal-row {
+    display: flex;
+    margin-left: 20px;
+}
+.modal-col {
+    display: flex;
+    align-items: center;
+    margin: 8px 0 8px 0;
+}
+.personal-info-modal {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+}
+.red-star {
+    color: red;
+}
+.personal-info-subway-header {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    margin: 10px 0 5px 0;
+}
+.personal-info-subway-table {
+    padding: 0 20px 0 0;
+    background-color: #fff;
+}
+.personal-info-lost-header {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    margin: 10px 0 5px 0;
+}
+.personal-info-lost-table {
+    padding: 0 20px 0 0;
+    background-color: #fff;
+}

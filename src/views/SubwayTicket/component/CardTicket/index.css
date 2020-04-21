@@ -1,0 +1,11 @@
+.card-ticket-search {
+    display: flex;
+    align-items: center;
+}
+.card-ticket-search-row {
+    margin: 0 10px;
+}
+.card-ticket-content {
+    margin-top: 10px;
+    height: 300px;
+}

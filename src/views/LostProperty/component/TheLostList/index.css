@@ -1,0 +1,26 @@
+.the-lost-list {
+    margin: 0 20px;
+    width: 100%;
+}
+.the-lost-list-content {
+    margin: 10px 0;
+}
+.the-lost-list-header {
+    padding: 20px 0;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.the-lost-list-content-search {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+.the-lost-list-content-search-name {
+    margin-right: 10px;
+}
+.the-lost-list-table {
+    padding: 0 20px 0 0;
+    background-color: #fff;
+}
