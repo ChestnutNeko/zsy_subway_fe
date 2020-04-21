@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import Router from './routers';
 import reducers from './redux';
+import './axios/http';
 
 ReactDOM.render(
   <Provider store={reducers}>

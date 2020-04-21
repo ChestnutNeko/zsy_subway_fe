@@ -2,7 +2,7 @@
  * 发布失物
  */
 import React, { Component } from 'react';
-import { Breadcrumb, Table, Tooltip, Input, DatePicker, Form, Select, Button } from 'antd';
+import { Breadcrumb, Table, Tooltip, Input, DatePicker, Form, Select, Button, message } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import './index.css';
 
@@ -16,6 +16,16 @@ class ReleaseTheLost extends Component {
 
     onDateChange = () => {
         console.log('date')
+    }
+
+    // 确认
+    handleOk = () => {
+        message.success('ok')
+    }
+
+    // 取消
+    handleCancel = () => {
+        message.error('cancel')
     }
 
     render() {
@@ -53,7 +63,7 @@ class ReleaseTheLost extends Component {
                             </Select>
                         </Form.Item> */}
                         <Form.Item label={<div><span className='red-star'>*&nbsp;</span>拾到时间</div>} rules={[{ required: true, message: '请输入拾到时间' }]}>
-                            <DatePicker onChange={this.onDateChange()} />
+                            <DatePicker onChange={this.onDateChange()} style={{ width: 300 }} />
                         </Form.Item>
                         <Form.Item label={<div><span className='red-star'>*&nbsp;</span>领取点&nbsp;<Tooltip placement='bottom' title={<div>请输入物品暂存地铁站<br/>有疑问请咨询站内工作人员</div>}><InfoCircleOutlined /></Tooltip></div>} rules={[{ required: true, message: '请输入领取点' }]}>
                             <Input placeholder='请输入领取点' style={{ width: 300 }} />
@@ -65,7 +75,7 @@ class ReleaseTheLost extends Component {
                             <Button type='' onClick={this.handleCancel} style={{ width: 80, marginRight: 20 }}>
                                 取消
                             </Button>
-                            <Button type="primary" htmlType="submit" style={{ width: 80 }}>
+                            <Button type="primary" htmlType="submit" style={{ width: 80 }} onClick={this.handleOk}>
                                 确认
                             </Button>
                         </Form.Item>

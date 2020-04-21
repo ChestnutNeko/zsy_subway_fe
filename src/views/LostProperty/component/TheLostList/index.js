@@ -6,7 +6,7 @@ import { Breadcrumb, Input, Table, Button, message } from 'antd';
 import './index.css';
 import axios from "axios";
 import '../../../../mock/mock';
-import apiRequest from '../../../../assets/js/apiManager';
+import  * as http from '../../store/action';
 const { Search } = Input;
 
 class TheLostList extends Component {
@@ -50,11 +50,19 @@ class TheLostList extends Component {
                 }
             }],
             dataSource: [],
+            pagination: {},
+            loading: false,
+            goodsName: 'sadf',
+            page: 1,
+            pageSize: 10,
+            totalNums: 2, // 总条数
+            pages: 1, // 总页数
         }
     }
 
     componentDidMount() {
-        this.getTheLostList();
+        // this.getTheLostList();
+        this.theLostList();
     }
 
     // 失物一览列表
@@ -64,12 +72,42 @@ class TheLostList extends Component {
                 dataSource: res.data.data.get_the_lost_list
             });
         });
-        // apiRequest.get('getTheLostList', {}, res =>
-        //     this.setState({
-        //         dataSource: res.data.getTheLostList
-        //     })
-        // )
     }
+    
+    // 失物一览
+    theLostList = (page = 1, pageSize = 10) => {
+        this.setState({
+            loading: true,
+        });
+        const { goodsName } = this.state;
+        http.theLostList({
+            goodsName,
+            page,
+            pageSize
+        }, res => {
+            console.log('1111111111111111111111', res)
+            // if (code === 0) {
+            //     this.setState({
+            //         totalNums: res.data.total, // 总条数
+            //         pages: res.data.pages, // 总页数
+            //         page: res.data.page, // 当前页
+            //         pageSize: res.data.pageSize, // 10,20,30,50
+            //         dataSource: res.data.body,
+            //         loading: false,
+            //     });
+            // } else {
+            //     message.warning(msg);
+            //     this.setState({
+            //         totalNums: 0, // 总条数
+            //         pages: 0, // 总页数
+            //         page: 0, // 当前页
+            //         pageSize: 10, // 10,20,30,50
+            //         dataSource: [],
+            //         loading: false,
+            //     });
+            // }
+        })
+    };
 
     // 收藏
     handleCollect = id => {
@@ -85,8 +123,12 @@ class TheLostList extends Component {
         console.log('city');
     }
 
+    handleTableChange = () => {
+        console.log('table');
+    }
+
     render() {
-        const { columns, dataSource } = this.state;
+        const { columns, dataSource, pagination, loading } = this.state;
         return(
             <div className='the-lost-list'>
                 <Breadcrumb>
@@ -102,16 +144,23 @@ class TheLostList extends Component {
                                     onSearch={this.handleSearchName}
                                 />
                             </div>
-                            <div className='the-lost-list-content-search-city'>
+                            {/* <div className='the-lost-list-content-search-city'>
                                 <Search
                                     placeholder='请选择城市'
                                     onSearch={this.handleSearchCity}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className='the-lost-list-table'>
-                        <Table dataSource={dataSource} columns={columns} rowKey={record => record.goodsId} />
+                        <Table 
+                            dataSource={dataSource} 
+                            columns={columns} 
+                            rowKey={record => record.goodsId} 
+                            pagination={pagination} 
+                            loading={loading}
+                            onChange={this.handleTableChange}
+                        />
                     </div>
                 </div>
             </div>
