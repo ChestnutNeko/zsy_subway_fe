@@ -1,0 +1,19 @@
+{
+    "get_personal_subway": [
+        {
+            "userId": 1,
+            "userName": "Nacy",
+            "userPosition": "北京",
+            "userPhone": 18823456789,
+            "userEmail": "12345@qq.com",
+            "userSubway": "经海路-荣昌东街"
+        }, {
+            "userId": 2,
+            "userName": "Lily",
+            "userPosition": "哈尔滨",
+            "userPhone": 13199881235,
+            "userEmail": "1234567@qq.com",
+            "userSubway": "哈理工-黑大"
+        }
+    ]
+}
