@@ -6,7 +6,9 @@ import { Breadcrumb, Input, Table, Button, message } from 'antd';
 import './index.css';
 import axios from "axios";
 import '../../../../mock/mock';
-import  * as http from '../../store/action';
+import { connect } from 'react-redux';
+// import  * as http from '../../store/action';
+import * as actions from '../../store/action';
 const { Search } = Input;
 
 class TheLostList extends Component {
@@ -80,33 +82,36 @@ class TheLostList extends Component {
             loading: true,
         });
         const { goodsName } = this.state;
-        http.theLostList({
-            goodsName,
-            page,
-            pageSize
-        }, res => {
-            console.log('1111111111111111111111', res)
-            // if (code === 0) {
-            //     this.setState({
-            //         totalNums: res.data.total, // 总条数
-            //         pages: res.data.pages, // 总页数
-            //         page: res.data.page, // 当前页
-            //         pageSize: res.data.pageSize, // 10,20,30,50
-            //         dataSource: res.data.body,
-            //         loading: false,
-            //     });
-            // } else {
-            //     message.warning(msg);
-            //     this.setState({
-            //         totalNums: 0, // 总条数
-            //         pages: 0, // 总页数
-            //         page: 0, // 当前页
-            //         pageSize: 10, // 10,20,30,50
-            //         dataSource: [],
-            //         loading: false,
-            //     });
-            // }
+        this.props.theLostList({goodsName, page, pageSize}, res => {
+            console.log('111')
         })
+        // http.theLostList({
+        //     goodsName,
+        //     page,
+        //     pageSize
+        // }, res => {
+        //     console.log('1111111111111111111111', res)
+        //     // if (code === 0) {
+        //     //     this.setState({
+        //     //         totalNums: res.data.total, // 总条数
+        //     //         pages: res.data.pages, // 总页数
+        //     //         page: res.data.page, // 当前页
+        //     //         pageSize: res.data.pageSize, // 10,20,30,50
+        //     //         dataSource: res.data.body,
+        //     //         loading: false,
+        //     //     });
+        //     // } else {
+        //     //     message.warning(msg);
+        //     //     this.setState({
+        //     //         totalNums: 0, // 总条数
+        //     //         pages: 0, // 总页数
+        //     //         page: 0, // 当前页
+        //     //         pageSize: 10, // 10,20,30,50
+        //     //         dataSource: [],
+        //     //         loading: false,
+        //     //     });
+        //     // }
+        // })
     };
 
     // 收藏
@@ -168,4 +173,15 @@ class TheLostList extends Component {
     }
 }
 
-export default TheLostList;
+const mapStateToProps = function(state) {
+    return {};
+};
+const mapDispatchToProps = function(dispatch) {
+    return {
+        theLostList(params, cb) {
+            dispatch(actions.theLostList(params, cb));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TheLostList);

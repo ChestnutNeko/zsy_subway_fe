@@ -6,10 +6,10 @@ import './server';
 
 let BASEURL = ""; // 请求接口地址
 let BASEURL_DOMAIN = "";
-const API_PREFIX = "/crm/api/"; // api前缀
+const API_PREFIX = ""; // api前缀
 // const protocol = window.location.protocol;
 
-const DEV_DOMAIN = ""; //开发环境域名
+const DEV_DOMAIN = ""; // 开发环境域名
 
 if (process.env.REACT_APP_SECRET_API === "development") {
   BASEURL_DOMAIN = DEV_DOMAIN;

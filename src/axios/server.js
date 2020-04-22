@@ -26,7 +26,7 @@ axios.interceptors.response.use(response => {
     // 请求完成token置空
     axiosToken = null;
     // 提示信息
-    message.warn(error);
+    // message.warn(error);
     return Promise.reject(error); // 返回接口返回的错误信息
     }
 );
