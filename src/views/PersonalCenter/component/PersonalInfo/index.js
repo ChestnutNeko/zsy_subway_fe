@@ -132,6 +132,7 @@ class PersonalInfo extends Component {
                 }
             }],
             dataSourceLost: [],
+            goodsName: '',
             goodsPage: 1,
             goodsPageSize: 10, // 10, 20, 30, 50
             goodsTotalNum: 0, // 总条数
@@ -188,6 +189,32 @@ class PersonalInfo extends Component {
         });
     }
 
+    // 失物收藏列表
+    routeCollectList = (goodsPage = 1, goodsPageSize = 10) => {
+        this.setState({
+            loading: true,
+        });
+        const { goodsName } = this.state;
+        this.props.theLostCollectList({ goodsName, goodsPage, goodsPageSize }, res => {
+            if(res.body) {
+                this.setState({
+                    goodsPage: res.body.goodsPage,
+                    goodsPageSize: res.body.goodsPageSize,
+                    goodsTotalNum: res.body.goodsTotalNum,
+                    goodsPages: res.body.goodsPages,
+                    dataSourceLost: res.body.data,
+                    loading: false
+                });
+            } else {
+                message.warn(res.msg);
+                this.setState({
+                    dataSourceSubway: [],
+                    loading: false
+                });
+            }
+        });
+    }
+
     // 失物列表mockjs
     getPersonalLostList = () => {
         axios.post('/\/get_personal_lost_list.mock/', {dataType:'json'}).then(res => {
@@ -207,22 +234,19 @@ class PersonalInfo extends Component {
             okText: '确认',
             cancelText: '取消',
             onOk() {
-                // this.setState({
-                //     spinning: true
-                // });
-                // http.requestSchemeListDelete({
-                //     subwayId: no,
-                // }).then(res => {
-                //     if (res.code === 0) {
-                //         message.success('取消成功');
-                //         that.subwayList();
-                //     }
-                // });
-                console.log('ok')
-                message.success('取消收藏成功');
-                // this.setState({
-                //     spinning: false
-                // });
+                this.setState({
+                    spinning: true
+                });
+                this.props.routeDelete({
+                    id,
+                }, res => {
+                    if (res.body) {
+                        message.success(res.msg);
+                        // that.subwayList();
+                    } else {
+                        message.warn(res.msg);
+                    }
+                });
             },
         });
     }
@@ -237,28 +261,22 @@ class PersonalInfo extends Component {
             okText: '确认',
             cancelText: '取消',
             onOk() {
-                // this.setState({
-                //     spinning: true
-                // });
-                // http.requestSchemeListDelete({
-                //     theLost: id,
-                // }).then(res => {
-                //     if (res.code === 0) {
-                //         message.success('取消成功');
-                //         that.theLostList();
-                //     }
-                // });
-                // this.setState({
-                //     spinning: false
-                // });
-                message.success('取消收藏成功');
+                this.setState({
+                    spinning: true
+                });
+                this.props.theLostListDelete({id}, res => {
+                    if(res.body) {
+                        message.success(res.msg);
+                    } else {
+                        message.warn(res.msg);
+                    }
+                });
             },
         });
     }
 
     // 修改信息
     handleInfo = () => {
-        console.log('-----------修改信息');
         this.setState({
             visible: true
         });
@@ -327,7 +345,7 @@ class PersonalInfo extends Component {
     render() {
         const { spinning, name, password, address, telephone, subway, email, visible, 
             dataSourceSubway, columnsSubway, routesPage, routesPageSize, routesTotalNum, routesPages,
-            dataSourceLost, columnsLost } = this.state;
+            dataSourceLost, columnsLost, goodsPage, goodsPageSize, goodsTotalNum, goodsPages } = this.state;
         return(
             <Spin spinning={spinning} indicator={antIcon}>
                 <div className='personal-info'>
@@ -410,17 +428,17 @@ class PersonalInfo extends Component {
                                 </div>
                             </div>
                             <div className='personal-info-subway-table'>
-                                <Table dataSource={dataSourceSubway}
+                                <Table 
+                                    dataSource={dataSourceSubway}
                                     columns={columnsSubway}
-                                    pagination={false}
-                                />
+                                    rowKey={record => record.routesId}
+                                    pagination={false} />
                                 <PaginationUi
                                     page={routesPage}
                                     pageSize={routesPageSize}
                                     totalNum={routesTotalNum}
                                     pages={routesPages}
-                                    onShowSizeChange={this.theLostCollectList}
-                                />
+                                    onShowSizeChange={this.theLostCollectList} />
                             </div>
                         </div>
                         <div className='personal-info-lost'>
@@ -433,9 +451,16 @@ class PersonalInfo extends Component {
                                 </div>
                             </div>
                             <div className='personal-info-lost-table'>
-                                <Table dataSource={dataSourceLost} 
-                                columns={columnsLost} 
-                                rowKey={record => record.goodsId} />
+                                <Table 
+                                    dataSource={dataSourceLost} 
+                                    columns={columnsLost} 
+                                    rowKey={record => record.goodsId} />
+                                <PaginationUi
+                                    page={goodsPage}
+                                    pageSize={goodsPageSize}
+                                    totalNum={goodsTotalNum}
+                                    pages={goodsPages}
+                                    onShowSizeChange={this.routeCollectList} />
                             </div>
                         </div>
                     </div>
@@ -458,7 +483,16 @@ const mapDispatchToProps = function(dispatch) {
         },
         userInfo(params, cb) {
             dispatch(actions.userInfo(params, cb));
-        }
+        },
+        routeDelete(params, cb) {
+            dispatch(actions.routeDelete(params, cb));
+        },
+        routeCollectList(params, cb) {
+            dispatch(actions.routeCollectList(params, cb));
+        },
+        theLostListDelete(params, cb) {
+            dispatch(actions.theLostListDelete(params, cb));
+        },
     };
 };
 

@@ -2,8 +2,11 @@
  * 管理员，用户管理
  */
 import React, { Component } from 'react';
-import { Breadcrumb, Table, Button, Input } from 'antd';
+import { Breadcrumb, Table, Button, Input, message } from 'antd';
 import './index.css';
+import { connect } from 'react-redux';
+import * as actions from '../../store/action';
+import PaginationUi from '../../../../components/PaginationUi';
 const { Search } = Input;
 var echarts = require('echarts/lib/echarts');
 // 引入提示框和标题组件
@@ -24,7 +27,7 @@ class UserManagement extends Component {
                 dataIndex: 'userId',
                 key: 'userId'
             }, {
-                title: '用户昵称',
+                title: '用户名',
                 dataIndex: 'userName',
                 key: 'userName'
             }, {
@@ -44,10 +47,6 @@ class UserManagement extends Component {
                 dataIndex: 'userSubway',
                 key: 'userSubway'
             }, {
-                title: '失物审批',
-                dataIndex: 'userLost',
-                key: 'userLost'
-            }, {
                 title: '操作',
                 dataIndex: 'opration',
                 key: 'opration',
@@ -59,12 +58,19 @@ class UserManagement extends Component {
                         </div>
                     )
                 }
-            }]
+            }],
+            loading: false,
+            userName: 'afvdv',
+            page: 1,
+            pageSize: 10,
+            totalNum: 2, // 总条数
+            pages: 1, // 总页数
         }
     }
 
     componentDidMount() {
         this.drawEcharts();
+        this.allUserList();
     }
 
     drawEcharts = () => {
@@ -111,12 +117,44 @@ class UserManagement extends Component {
         });
     }
 
-    handleUserSearch = () => {
-        console.log('userSearch');
+    handleUserSearch = value => {
+        console.log('userSearch', value);
+        this.setState({
+            userName: value
+        }, () => this.allUserList());
+    }
+
+    allUserList = (page = 1, pageSize = 10) => {
+        this.props.allUserList({
+            userName: this.state.userName,
+            page,
+            pageSize
+        }, res => {
+            if(res.body) {
+                this.setState({
+                    totalNum: res.body.totalNum,
+                    pages: res.body.pages,
+                    pageSize: res.body.pageSize,
+                    page: res.body.page,
+                    dataSource: res.body.data,
+                    loading: false
+                });
+            } else {
+                message.warn(res.msg);
+                this.setState({
+                    page: 0,
+                    pageSize: 10,
+                    pages: 0,
+                    totalNum: 0,
+                    dataSource: [],
+                    loading: false
+                });
+            }
+        });
     }
 
     render() {
-        const { dataSource, columns } = this.state;
+        const { dataSource, columns, page, pageSize, pages, totalNum } = this.state;
         return(
             <div className='user-management'>
                 <Breadcrumb>
@@ -128,13 +166,24 @@ class UserManagement extends Component {
                     <div className='user-management-header'>
                         <div className='user-management-search'>
                             <Search
-                                placeholder='用户id'
+                                placeholder='用户名'
                                 onSearch={this.handleUserSearch}
                             ></Search>
                         </div>
                     </div>
                     <div className='user-management-table'>
-                        <Table dataSource={dataSource} columns={columns}></Table>
+                        <Table 
+                            dataSource={dataSource} 
+                            columns={columns}
+                            pagination={false}
+                        />
+                        <PaginationUi
+                            page={page}
+                            pageSize={pageSize}
+                            pages={pages}
+                            totalNum={totalNum}
+                            onShowSizeChange={this.allUserList}
+                         />
                     </div>
                 </div>
             </div>
@@ -142,4 +191,15 @@ class UserManagement extends Component {
     }
 }
 
-export default UserManagement;
+const mapStateToProps = function(state) {
+    return {};
+};
+const mapDispatchToProps = function(dispatch) {
+    return {
+        allUserList(params, cb) {
+            dispatch(actions.allUserList(params, cb));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserManagement);

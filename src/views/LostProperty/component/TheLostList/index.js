@@ -185,7 +185,7 @@ const mapDispatchToProps = function(dispatch) {
     return {
         theLostList(params, cb) {
             dispatch(actions.theLostList(params, cb));
-        }
+        },
     };
 };
 
