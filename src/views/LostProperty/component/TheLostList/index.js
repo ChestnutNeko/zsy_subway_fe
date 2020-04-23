@@ -9,6 +9,7 @@ import '../../../../mock/mock';
 import { connect } from 'react-redux';
 // import  * as http from '../../store/action';
 import * as actions from '../../store/action';
+import PaginationUi from '../../../../components/PaginationUi';
 const { Search } = Input;
 
 class TheLostList extends Component {
@@ -54,7 +55,7 @@ class TheLostList extends Component {
             dataSource: [],
             pagination: {},
             loading: false,
-            goodsName: 'sadf',
+            goodsName: '',
             page: 1,
             pageSize: 10,
             totalNums: 2, // 总条数
@@ -67,7 +68,7 @@ class TheLostList extends Component {
         this.theLostList();
     }
 
-    // 失物一览列表
+    // 失物一览列表mock.js
     getTheLostList = () => {
         axios.get('/\/get_the_lost_list.mock/', {dataType:'json'}).then(res => {
             this.setState({
@@ -83,35 +84,27 @@ class TheLostList extends Component {
         });
         const { goodsName } = this.state;
         this.props.theLostList({goodsName, page, pageSize}, res => {
-            console.log('111')
-        })
-        // http.theLostList({
-        //     goodsName,
-        //     page,
-        //     pageSize
-        // }, res => {
-        //     console.log('1111111111111111111111', res)
-        //     // if (code === 0) {
-        //     //     this.setState({
-        //     //         totalNums: res.data.total, // 总条数
-        //     //         pages: res.data.pages, // 总页数
-        //     //         page: res.data.page, // 当前页
-        //     //         pageSize: res.data.pageSize, // 10,20,30,50
-        //     //         dataSource: res.data.body,
-        //     //         loading: false,
-        //     //     });
-        //     // } else {
-        //     //     message.warning(msg);
-        //     //     this.setState({
-        //     //         totalNums: 0, // 总条数
-        //     //         pages: 0, // 总页数
-        //     //         page: 0, // 当前页
-        //     //         pageSize: 10, // 10,20,30,50
-        //     //         dataSource: [],
-        //     //         loading: false,
-        //     //     });
-        //     // }
-        // })
+            if(res.body) {
+                this.setState({
+                    totalNum: res.body.totalNum,
+                    pages: res.body.pages,
+                    pageSize: res.body.pageSize,
+                    page: res.body.page,
+                    dataSource: res.body.data,
+                    loading: false
+                });
+            } else {
+                message.warn(res.msg);
+                this.setState({
+                    page: 0,
+                    pageSize: 10,
+                    pages: 0,
+                    totalNum: 0,
+                    dataSource: [],
+                    loading: false
+                });
+            }
+        });
     };
 
     // 收藏
@@ -120,8 +113,13 @@ class TheLostList extends Component {
     }
 
     // 按名称搜索
-    handleSearchName = () => {
-        console.log('name');
+    handleSearchName = value => {
+        console.log('name', value);
+        this.setState({
+            goodsName: value
+        }, () => {
+            this.theLostList();
+        });
     }
 
     handleSearchCity = () => {
@@ -133,7 +131,7 @@ class TheLostList extends Component {
     }
 
     render() {
-        const { columns, dataSource, pagination, loading } = this.state;
+        const { columns, dataSource, pagination, loading, totalNum, pages, pageSize, page } = this.state;
         return(
             <div className='the-lost-list'>
                 <Breadcrumb>
@@ -162,9 +160,16 @@ class TheLostList extends Component {
                             dataSource={dataSource} 
                             columns={columns} 
                             rowKey={record => record.goodsId} 
-                            pagination={pagination} 
+                            pagination={false} 
                             loading={loading}
                             onChange={this.handleTableChange}
+                        />
+                        <PaginationUi
+                            page={page}
+                            pageSize={pageSize}
+                            pages={pages}
+                            totalNum={totalNum}
+                            onShowSizeChange={this.theLostList}
                         />
                     </div>
                 </div>

@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import { Breadcrumb, Table, Tooltip, Input, DatePicker, Form, Select, Button, message } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import './index.css';
+import * as actions from '../../store/action';
+import { connect } from 'react-redux';
 
 class ReleaseTheLost extends Component {
     constructor(props) {
@@ -20,7 +22,13 @@ class ReleaseTheLost extends Component {
 
     // 确认
     handleOk = () => {
-        message.success('ok')
+        this.props.theLostListAdd({name: '1'}, res => {
+            if(res.code === 0) {
+                message.success(res.msg);
+            } else {
+                message.warn(res.msg);
+            }
+        });
     }
 
     // 取消
@@ -33,6 +41,9 @@ class ReleaseTheLost extends Component {
             labelCol: { span: 8, },
             wrapperCol: { span: 16, },
         };
+        const onFinish = values => {
+            console.log(values);
+        }
         return(
             <div className='release-the-lost'>
                 <div className='release-the-lost-header'>
@@ -43,7 +54,7 @@ class ReleaseTheLost extends Component {
                 </div>
                 <div className='release-the-lost-content'>
                     {/* <div className='release-the-lost-text'>请将您拾到的失物信息填写完整，方便失主快速找回，感谢。</div> */}
-                    <Form {...layout} name='release-the-lost'>
+                    <Form {...layout} name='release-the-lost' onFinish={onFinish}>
                         <Form.Item label={<div><span className='red-star'>*&nbsp;</span>失物名称</div>} rules={[{ required: true, message: '请输入失物名称' }]}>
                             <Input placeholder='请输入失物名称' style={{ width: 300 }} />
                         </Form.Item>
@@ -86,4 +97,15 @@ class ReleaseTheLost extends Component {
     }
 }
 
-export default ReleaseTheLost;
+const mapStateToProps = function(state) {
+    return {}
+}
+const mapDispatchToProps = function(dispatch) {
+    return {
+        theLostListAdd(params, cb) {
+            dispatch(actions.theLostListAdd(params, cb));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReleaseTheLost);

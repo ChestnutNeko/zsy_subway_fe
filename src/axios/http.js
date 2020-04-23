@@ -31,7 +31,7 @@ export default {
     theLostList: 'get_goods_list', // 获取失物列表+模糊搜索（查）
     theLostListCollect: '', // 失物列表收藏（增）
 
-    theLostListAdd: '', // 新增失物（增）
+    theLostListAdd: 'insert_losts', // 新增失物（增）
 
     // 个人中心
     personInfoList: '', // 个人信息（查）
