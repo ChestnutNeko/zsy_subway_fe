@@ -7,6 +7,9 @@ import { Breadcrumb, Avatar, Tooltip, Button, Modal, Input, Table, message, Spin
 import { LoadingOutlined, UserOutlined, WomanOutlined, HomeOutlined, PhoneOutlined, BranchesOutlined, MailOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import '../../../../mock/mock';
+import { connect } from 'react-redux';
+import * as actions from '../../store/action';
+import PaginationUi from '../../../../components/PaginationUi';
 const { Search } = Input;
 const { confirm } = Modal;
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -22,6 +25,9 @@ class PersonalInfo extends Component {
             name: '喵喵一十八',
             nameTip: '',
             nameTipShow: false,
+            password: '123456',
+            passwordTip: '',
+            passwordTipShow: false,
             address: '未填写所在地区',
             addressTip: '',
             addressTipShow: false,
@@ -46,37 +52,33 @@ class PersonalInfo extends Component {
             }],
             columnsSubway: [{
                 title: '编号',
-                dataIndex: 'id',
-                key: 'id',
-            }, {
-                title: '用户id',
-                dataIndex: 'userId',
-                key: 'userId'
+                dataIndex: 'routesId',
+                key: 'routesId',
             }, {
                 title: '用户名',
                 dataIndex: 'userName',
                 key: 'userName'
             }, {
-                title: '所在地区',
-                dataIndex: 'userPosition',
-                key: 'userPosition'
-            }, {
-                title: '联系电话',
-                dataIndex: 'userPhone',
-                key: 'userPhone'
-            }, {
-                title: '邮箱',
-                dataIndex: 'userEmail',
-                key: 'userEmail'
-            }, {
                 title: 
-                <div>常乘地铁&nbsp;
+                <div>路线名&nbsp;
                     <Tooltip placement='bottom' title='111'>
                         <InfoCircleOutlined />
                     </Tooltip>
                 </div>,
-                dataIndex: 'userSubway',
-                key: 'userSubway'
+                dataIndex: 'routesName',
+                key: 'routesName'
+            }, {
+                title: '起始点',
+                dataIndex: 'routesStart',
+                key: 'routesStart'
+            }, {
+                title: '终点',
+                dataIndex: 'routesEnd',
+                key: 'routesEnd'
+            }, {
+                title: '地区',
+                dataIndex: 'routesPosiotion',
+                key: 'routesPosiotion'
             }, {
                 title: '功能操作',
                 dataIndex: 'operation',
@@ -89,6 +91,10 @@ class PersonalInfo extends Component {
                     )
                 }
             }],
+            routesPage: 1,
+            routesPageSize: 10, // 10, 20, 30, 50
+            routesTotalNum: 0, // 总条数
+            routesPages: 0, // 总页数
             columnsLost: [{
                 title: '编号',
                 dataIndex: 'goodsId',
@@ -126,42 +132,68 @@ class PersonalInfo extends Component {
                 }
             }],
             dataSourceLost: [],
+            goodsPage: 1,
+            goodsPageSize: 10, // 10, 20, 30, 50
+            goodsTotalNum: 0, // 总条数
+            goodsPages: 0, // 总页数
         }
     }
 
     componentDidMount() {
-        this.getPersonalLostList();
+        // this.getPersonalLostList();
+        this.theLostCollectList();
     }
 
-    // 失物列表
+    // 个人信息
+    userInfo = () => {
+        this.props.userInfo({ 
+            name: this.state.name,
+            password: this.state.password
+        }, res => {
+            this.setState({
+                id: res.data.id,
+                name: res.data.name,
+                password: res.data.password,
+                telephone: res.data.telephone,
+                address: res.data.address,
+                subway: res.data.subway,
+                email: res.data.email
+            });
+        });
+    }
+
+    // 收藏路线列表
+    theLostCollectList = (routesPage = 1, routesPageSize = 10) => {
+        this.setState({
+            loading: true,
+        });
+        const { routesName } = this.state;
+        this.props.theLostCollectList({ routesName, routesPage, routesPageSize }, res => {
+            if(res.body) {
+                this.setState({
+                    routesTotalNum: res.body.totalNum,
+                    routesPages: res.body.pages,
+                    routesPageSize: res.body.pageSize,
+                    routesPage: res.body.page,
+                    dataSourceSubway: res.body.data,
+                    loading: false
+                });
+            } else {
+                message.warn(res.msg);
+                this.setState({
+                    dataSourceSubway: [],
+                    loading: false
+                });
+            }
+        });
+    }
+
+    // 失物列表mockjs
     getPersonalLostList = () => {
         axios.post('/\/get_personal_lost_list.mock/', {dataType:'json'}).then(res => {
             this.setState({
                 dataSourceLost: res.data.data.get_personal_lost_list
             });
-        });
-    }
-
-    // 修改信息
-    handleInfo = () => {
-        console.log('-----------修改信息');
-        this.setState({
-            visible: true
-        });
-    }
-
-    // 修改信息确认
-    handleInfoOk = () => {
-        console.log('ok');
-        this.setState({
-            visible: true
-        });
-    }
-
-    // 修改信息取消
-    handleInfoCancel = () => {
-        this.setState({
-            visible: false
         });
     }
 
@@ -224,8 +256,78 @@ class PersonalInfo extends Component {
         });
     }
 
+    // 修改信息
+    handleInfo = () => {
+        console.log('-----------修改信息');
+        this.setState({
+            visible: true
+        });
+    }
+
+    // 修改信息确认
+    handleInfoOk = () => {
+        console.log('ok');
+        const { id, name, password, address, telephone, subway, email} = this.state;
+        this.props.userInfoUpdate({
+            id,
+            name,
+            password,
+            address,
+            telephone,
+            subway,
+            email
+        }, res => {
+            if(res.body) {
+                message.success('成功');
+                this.setState({
+                    visible: false
+                });
+            }
+        });
+    }
+
+    // 修改信息取消
+    handleInfoCancel = () => {
+        this.setState({
+            visible: false
+        });
+    }
+
+    handleNameChange = e => {
+        this.setState({
+            name: e.target.value
+        });
+    }
+    handlePasswordChange = e => {
+        this.setState({
+            password: e.target.value
+        });
+    }
+    handleAddressChange = e => {
+        this.setState({
+            address: e.target.value
+        });
+    }
+    handleTelephoneChange = e => {
+        this.setState({
+            telephone: e.target.value
+        });
+    }
+    handleSubwayChange = e => {
+        this.setState({
+            subway: e.target.value
+        });
+    }
+    handleEmailChange = e => {
+        this.setState({
+            email: e.target.value
+        });
+    }
+
     render() {
-        const { spinning, name, address, telephone, subway, email, visible, dataSourceSubway, columnsSubway, dataSourceLost, columnsLost } = this.state;
+        const { spinning, name, password, address, telephone, subway, email, visible, 
+            dataSourceSubway, columnsSubway, routesPage, routesPageSize, routesTotalNum, routesPages,
+            dataSourceLost, columnsLost } = this.state;
         return(
             <Spin spinning={spinning} indicator={antIcon}>
                 <div className='personal-info'>
@@ -258,28 +360,41 @@ class PersonalInfo extends Component {
                                     okText={'确认'}
                                     cancelText={'取消'}
                                 >
+                                    {/* id, name, password, city, telephone, subway, email */}
                                     <div className='modal-row'>
                                         <div className='modal-col'>
                                             <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>用户名</div>
-                                            <Input placeholder='请填写用户名'></Input>
+                                            <Input placeholder='请填写用户名' value={name} onChange={this.handleNameChange}></Input>
+                                        </div>
+                                    </div>
+                                    <div className='modal-row'>
+                                        <div className='modal-col'>
+                                            <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>密码</div>
+                                            <Input placeholder='请填写密码' value={password} onChange={this.handlePasswordChange}></Input>
                                         </div>
                                     </div>
                                     <div className='modal-row'>
                                         <div className='modal-col'>
                                             <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>所在地</div>
-                                            <Input placeholder='请填写所在地区'></Input>
+                                            <Input placeholder='请填写所在地区' value={address} onChange={this.handleAddressChange}></Input>
                                         </div>
                                     </div>
                                     <div className='modal-row'>
                                         <div className='modal-col'>
                                             <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>联系电话</div>
-                                            <Input placeholder='请填写联系电话'></Input>
+                                            <Input placeholder='请填写联系电话' value={telephone} onChange={this.handleTelephoneChange}></Input>
                                         </div>
                                     </div>
                                     <div className='modal-row'>
                                         <div className='modal-col'>
-                                            <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>联系电话</div>
-                                            <Input placeholder='请填写联系电话'></Input>
+                                            <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>常乘地铁</div>
+                                            <Input placeholder='请填写常乘地铁' value={subway} onChange={this.handleSubwayChange}></Input>
+                                        </div>
+                                    </div>
+                                    <div className='modal-row'>
+                                        <div className='modal-col'>
+                                            <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>邮箱</div>
+                                            <Input placeholder='请填写邮箱' value={email} onChange={this.handleEmailChange}></Input>
                                         </div>
                                     </div>
                                 </Modal>
@@ -295,7 +410,17 @@ class PersonalInfo extends Component {
                                 </div>
                             </div>
                             <div className='personal-info-subway-table'>
-                                <Table dataSource={dataSourceSubway} columns={columnsSubway} />
+                                <Table dataSource={dataSourceSubway}
+                                    columns={columnsSubway}
+                                    pagination={false}
+                                />
+                                <PaginationUi
+                                    page={routesPage}
+                                    pageSize={routesPageSize}
+                                    totalNum={routesTotalNum}
+                                    pages={routesPages}
+                                    onShowSizeChange={this.theLostCollectList}
+                                />
                             </div>
                         </div>
                         <div className='personal-info-lost'>
@@ -308,7 +433,9 @@ class PersonalInfo extends Component {
                                 </div>
                             </div>
                             <div className='personal-info-lost-table'>
-                                <Table dataSource={dataSourceLost} columns={columnsLost} rowKey={record => record.goodsId} />
+                                <Table dataSource={dataSourceLost} 
+                                columns={columnsLost} 
+                                rowKey={record => record.goodsId} />
                             </div>
                         </div>
                     </div>
@@ -318,4 +445,21 @@ class PersonalInfo extends Component {
     }
 }
 
-export default PersonalInfo;
+const mapStateToProps = function(state) {
+    return {};
+};
+const mapDispatchToProps = function(dispatch) {
+    return {
+        theLostCollectList(params, cb) {
+            dispatch(actions.theLostCollectList(params, cb));
+        },
+        userInfoUpdate(params, cb) {
+            dispatch(actions.userInfoUpdate(params, cb));
+        },
+        userInfo(params, cb) {
+            dispatch(actions.userInfo(params, cb));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalInfo);

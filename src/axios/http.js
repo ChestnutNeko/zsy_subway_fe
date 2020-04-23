@@ -23,25 +23,27 @@ export default {
     // 首页
 
     // 地铁路线
-    routeCollect: '', // 路线收藏（增）
+    routeCollect: 'collect_routes', // 路线收藏（增）
 
     // 地铁购票
 
     // 失物招领
     theLostList: 'get_goods_list', // 获取失物列表+模糊搜索（查）
-    theLostListCollect: '', // 失物列表收藏（增）
+    theLostListCollect: 'collect_losts', // 失物列表收藏（增）
 
     theLostListAdd: 'insert_losts', // 新增失物（增）
 
     // 个人中心
-    personInfoList: '', // 个人信息（查）
-    personInfoUpdate: '', // 个人信息修改（改）
+    userInfo: 'user_info', // 个人信息（查）
+    userInfoUpdate: 'update_user', // 个人信息修改（改）
 
-    theLostCollectList: '', // 收藏失物列表（查）
-    theLostListDelete: '', // 失物取消收藏（删）
+    theLostCollectList: 'get_routes_list', // 收藏失物列表（查）
+    theLostListDelete: 'delete_losts', // 失物取消收藏（删）
 
-    routeCollectList: '', // 收藏路线列表（查）
-    routeDelete: '', // 路线取消收藏（删）
+    routeCollectList: 'collect_goods_list', // 收藏路线列表（查）
+    routeDelete: 'delete_routes', // 路线取消收藏（删）
+
+    allUserList: 'all_info', // 管理员查看用户信息（查）
 
     HEADER: HEADER,
     FILEHEADER: FILEHEADER,

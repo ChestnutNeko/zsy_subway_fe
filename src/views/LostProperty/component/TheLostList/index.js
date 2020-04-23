@@ -58,7 +58,7 @@ class TheLostList extends Component {
             goodsName: '',
             page: 1,
             pageSize: 10,
-            totalNums: 2, // 总条数
+            totalNum: 2, // 总条数
             pages: 1, // 总页数
         }
     }
