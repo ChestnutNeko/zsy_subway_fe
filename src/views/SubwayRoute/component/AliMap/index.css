@@ -1,0 +1,33 @@
+.map {
+    /* border: 10px solid #fff; */
+}
+.map-position {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    height: 50px;
+    width: 100%;
+    background-color: #fff;
+}
+.map-start {
+    display: flex;
+    align-items: center;
+}
+.map-start-text {
+    margin-left: 20px;
+    width: 50px;
+}
+.map-start-input {
+    width: 150px;
+}
+.map-end {
+    display: flex;
+    align-items: center;
+}
+.map-end-text {
+    margin-left: 20px;
+    width: 50px;
+}
+.map-end-input {
+    width: 150px;
+}
