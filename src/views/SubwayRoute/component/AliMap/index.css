@@ -26,8 +26,11 @@
 }
 .map-end-text {
     margin-left: 20px;
-    width: 50px;
+    width: 38px;
 }
 .map-end-input {
     width: 150px;
+}
+.map-button {
+    margin-left: 20px;
 }

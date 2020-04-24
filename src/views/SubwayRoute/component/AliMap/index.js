@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Map, Marker } from 'react-amap';
-import { Input } from 'antd';
+import { Input, Button, Modal } from 'antd';
 import './index.css';
 
 class AliMap extends Component {
@@ -13,6 +13,7 @@ class AliMap extends Component {
             routesStart: '', // 起始点
             routesEnd: '', // 终点
             routesName: '', // 路线名称
+            visible: false,
             // 设置坐标点，就会在地图上显示一个 标记点
             markerPosition: { longitude: 120, latitude: 35 },
         }
@@ -231,8 +232,44 @@ class AliMap extends Component {
         });
     }
 
+    collectRoutes = () => {
+        this.setState({
+            visible: true
+        });
+    }
+
+    handleCollectOk = () => {
+        this.setState({
+            visible: false
+        });
+    }
+
+    handleCollectCancel = () => {
+        this.setState({
+            visible: false
+        });
+    }
+
+    handleRouteNameChange = e => {
+        this.setState({
+            routesName: e.target.value
+        });
+    }
+
+    handleRouteStartChange = e => {
+        this.setState({
+            routesStart: e.target.value
+        });
+    }
+
+    handleRouteEndChange = e => {
+        this.setState({
+            routesEnd: e.target.value
+        });
+    }
+
     render() {
-        const { routesStart, routesEnd, routesName } = this.state;
+        const { routesStart, routesEnd, routesName, visible } = this.state;
         return(
             // <div className='ali-map' style={{width:'100%',height:'500px'}}>
             //     <div id='mysubway' style={{width:'100%',height:'100%'}}></div>
@@ -253,6 +290,34 @@ class AliMap extends Component {
                             <div className='map-end-text'>终点</div>
                             <Input id='amapInput' className='map-end-input' value={routesEnd} onChange={this.handleEndChange}></Input>
                         </div>
+                        <div className='map-button'><Button type='primary' onClick={this.collectRoutes}>收藏</Button></div>
+                        <Modal
+                            title='收藏路线'
+                            visible={visible}
+                            onOk={this.handleCollectOk}
+                            onCancel={this.handleCollectCancel}
+                            okText={'确认'}
+                            cancelText={'取消'}
+                        >
+                            <div className='modal-row'>
+                                <div className='modal-col'>
+                                    <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>路线名称</div>
+                                    <Input placeholder='请输入路线名称' value={routesName} onChange={this.handleRouteNameChange}></Input>
+                                </div>
+                            </div>
+                            <div className='modal-row'>
+                                <div className='modal-col'>
+                                    <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>起始点</div>
+                                    <Input placeholder='请输入起始点' value={routesStart} onChange={this.handleRouteStartChange}></Input>
+                                </div>
+                            </div>
+                            <div className='modal-row'>
+                                <div className='modal-col'>
+                                    <div className='personal-info-modal'><span className='red-star'>*&nbsp;</span>终点</div>
+                                    <Input placeholder='请输入终点' value={routesEnd} onChange={this.handleRouteEndChange}></Input>
+                                </div>
+                            </div>
+                        </Modal>
                     </div>
                 </div>
             </>

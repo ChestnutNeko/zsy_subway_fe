@@ -1,0 +1,11 @@
+.home-text {
+    height: 50px;
+    width: 100%;
+    background-color: #fff;
+}
+.home-text-header {
+    display: flex;
+}
+.home-text-header-hello {
+    
+}

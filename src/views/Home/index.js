@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb } from 'antd';
 import './index.css';
+import HomeText from './component/HomeText';
 import HomeMap from './component/HomeMap';
 
 class Home extends Component {
@@ -17,6 +18,7 @@ class Home extends Component {
                     </Breadcrumb>
                 </div>
                 <div className='home-content'>
+                    <HomeText />
                     <HomeMap />
                 </div>
             </div>
