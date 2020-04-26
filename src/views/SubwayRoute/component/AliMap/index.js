@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Map, Marker } from 'react-amap';
-import { Input, Button, Modal } from 'antd';
+import { Input, Button, Modal, message } from 'antd';
 import './index.css';
 
 class AliMap extends Component {
@@ -242,6 +242,7 @@ class AliMap extends Component {
         this.setState({
             visible: false
         });
+        message.success('收藏成功，请到个人中心查看');
     }
 
     handleCollectCancel = () => {

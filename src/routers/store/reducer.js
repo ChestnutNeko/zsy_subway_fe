@@ -14,7 +14,7 @@ import { HomeOutlined, BranchesOutlined, PayCircleOutlined, WhatsAppOutlined, Us
 const initRouter = {
     appChildren: [
         {
-            path: '/',
+            path: '/home',
             component: Home,
             key: 'home',
             name: '首页',

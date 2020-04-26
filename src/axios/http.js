@@ -21,6 +21,7 @@ const FILEHEADER = { "Content-Type": "multipart/form-data" };
 
 export default {
     // 首页
+    userLogin: 'user_login', // 登录
 
     // 地铁路线
     routeCollect: 'collect_routes', // 路线收藏（增）
