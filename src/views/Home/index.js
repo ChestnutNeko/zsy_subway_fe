@@ -18,7 +18,7 @@ class Home extends Component {
                     </Breadcrumb>
                 </div>
                 <div className='home-content'>
-                    <HomeText />
+                    {/* <HomeText /> */}
                     <HomeMap />
                 </div>
             </div>
