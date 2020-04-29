@@ -26,8 +26,8 @@ class RouterView extends Component {
 
     // 获取用户信息
     getUserInfo = () => {
-        const { routerView } = this.props;
-        console.log('======', routerView);
+        const { userLoginInfo } = this.props;
+        console.log('======', userLoginInfo);
     }
 
     // 路由切换
@@ -93,7 +93,8 @@ class RouterView extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        routerView: state.routerReducer.appChildren
+        routerView: state.routerReducer.appChildren,
+        userLoginInfo: state
     }
 }
 export default connect(mapStateToProps)(RouterView);

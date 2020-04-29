@@ -17,9 +17,14 @@ const action = {
 				"msg": null,
 				"data": {
 					"userId": "48",
-					"userName": "18612273985",
+					"userName": "root",
+					"userPassword": "123456",
 					"avatar": null,
-				   	"role": 1
+					"role": 1, // -1:未登录; 1:用户（已登录）; 2:管理员（已登录）
+					"permissions": {
+						"homePermission": 1,
+						"subwayRoutePermission": 1,
+					}
 				}
 			}
 			if(response.code === okCode) {
@@ -38,6 +43,17 @@ const action = {
 // 	return {
 // 		type: actionType.REQUESTUSEMESSAGE,
 // 		userInfoList: userInfo
+// 	}
+// }
+
+// export default (state = userLoginInfo, action) => {
+// 	switch (action.type) {
+// 		case actionType.USERLOGININFO: {
+// 			break
+// 		}
+// 		default: {
+// 			return state;
+// 		}
 // 	}
 // }
 

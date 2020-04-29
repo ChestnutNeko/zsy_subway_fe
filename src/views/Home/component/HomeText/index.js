@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Input } from 'antd';
 
 class HomeText extends Component {
     constructor(props) {
