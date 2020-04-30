@@ -18,28 +18,32 @@ class TheLostList extends Component {
         this.state = {
             columns: [{
                 title: '失物编号',
-                dataIndex: 'goodsId',
-                key: 'goodsId',
+                dataIndex: 'theLostId',
+                key: 'theLostId',
             }, {
                 title: '失物名称',
-                dataIndex: 'goodsName',
-                key: 'goodsName',
+                dataIndex: 'theLostName',
+                key: 'theLostName',
             }, {
                 title: '城市',
-                dataIndex: 'goodsCity',
-                key: 'goodsCity',
+                dataIndex: 'theLostCity',
+                key: 'theLostCity',
             }, {
                 title: '预估金额（元）',
-                dataIndex: 'goodsValue',
-                key: 'goodsValue',
+                dataIndex: 'theLostValue',
+                key: 'theLostValue',
+            }, {
+                title: '日期',
+                dataIndex: 'theLostDate',
+                key: 'theLostDate',
             }, {
                 title: '领取点',
-                dataIndex: 'goodsLocation',
-                key: 'goodsLocation',
+                dataIndex: 'theLostPosition',
+                key: 'theLostPosition',
             }, {
                 title: '领取点电话',
-                dataIndex: 'goodsTelephone',
-                key: 'goodsTelephone',
+                dataIndex: 'theLostTelephone',
+                key: 'theLostTelephone',
             }, {
                 title: '功能操作',
                 dataIndex: 'operation',
@@ -47,7 +51,7 @@ class TheLostList extends Component {
                 render: (text, record) => {
                     return(
                         <div>
-                            <Button type='primary' onClick={this.handleCollect.bind(this, record.goodsId)}>收藏</Button>
+                            <Button type='primary' onClick={this.handleCollect.bind(this, record.theLostId)}>收藏</Button>
                         </div>
                     )
                 }
@@ -55,7 +59,7 @@ class TheLostList extends Component {
             dataSource: [],
             pagination: {},
             loading: false,
-            goodsName: '',
+            theLostName: '',
             page: 1,
             pageSize: 10,
             totalNum: 2, // 总条数
@@ -82,8 +86,8 @@ class TheLostList extends Component {
         this.setState({
             loading: true,
         });
-        const { goodsName } = this.state;
-        this.props.theLostList({goodsName, page, pageSize}, res => {
+        const { theLostName } = this.state;
+        this.props.theLostList({theLostName, page, pageSize}, res => {
             if(res.body) {
                 this.setState({
                     totalNum: res.body.totalNum,
@@ -116,7 +120,7 @@ class TheLostList extends Component {
     handleSearchName = value => {
         console.log('name', value);
         this.setState({
-            goodsName: value
+            theLostName: value
         }, () => {
             this.theLostList();
         });
