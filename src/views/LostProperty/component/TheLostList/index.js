@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { Breadcrumb, Input, Table, Button, message } from 'antd';
 import './index.css';
 import axios from "axios";
-import '../../../../mock/mock';
+// import '../../../../mock/mock';
 import { connect } from 'react-redux';
 // import  * as http from '../../store/action';
 import * as actions from '../../store/action';
@@ -69,13 +69,13 @@ class TheLostList extends Component {
     }
 
     // 失物一览列表mock.js
-    getTheLostList = () => {
-        axios.get('/\/get_the_lost_list.mock/', {dataType:'json'}).then(res => {
-            this.setState({
-                dataSource: res.data.data.get_the_lost_list
-            });
-        });
-    }
+    // getTheLostList = () => {
+    //     axios.get('/\/get_the_lost_list.mock/', {dataType:'json'}).then(res => {
+    //         this.setState({
+    //             dataSource: res.data.data.get_the_lost_list
+    //         });
+    //     });
+    // }
     
     // 失物一览
     theLostList = (page = 1, pageSize = 10) => {

@@ -2,7 +2,7 @@
  * 发布失物
  */
 import React, { Component } from 'react';
-import { Breadcrumb, Table, Tooltip, Input, DatePicker, Form, Select, Button, message } from 'antd';
+import { Breadcrumb, Tooltip, Input, DatePicker, Form, Select, Button, message } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import './index.css';
 import * as actions from '../../store/action';
@@ -17,7 +17,7 @@ class ReleaseTheLost extends Component {
     }
 
     onDateChange = () => {
-        console.log('date')
+        console.log('onDateChange')
     }
 
     // 确认
