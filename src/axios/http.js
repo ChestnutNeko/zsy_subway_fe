@@ -4,17 +4,7 @@
 import axios from 'axios';
 import './server';
 
-let BASEURL = ""; // 请求接口地址
-let BASEURL_DOMAIN = "";
-const API_PREFIX = ""; // api前缀
-// const protocol = window.location.protocol;
-
-const DEV_DOMAIN = ""; // 开发环境域名
-
-if (process.env.REACT_APP_SECRET_API === "development") {
-  BASEURL_DOMAIN = DEV_DOMAIN;
-}
-BASEURL = BASEURL_DOMAIN + API_PREFIX;
+const BASEURL = "http://localhost:8001/"
 
 const HEADER = { "Content-Type": "application/json;charset=UTF-8" };
 const FILEHEADER = { "Content-Type": "multipart/form-data" };
@@ -50,45 +40,15 @@ export default {
     FILEHEADER: FILEHEADER,
     async requestGet(url, params) {
         let response = await axios.get(BASEURL + url, { params: params });
-        if (process.env.NODE_ENV !== "production") {
-        console.log(
-            "%c" + url,
-            "color:red",
-            ",param:",
-            params,
-            ",response:",
-            response.data
-        );
-        }
-        return response.data;
+            return response.data;
     },
 
     async requestPost(url, param, timeout = 1000 * 60 * 5) {
         try {
         let response = await this.request(url, "post", param, timeout);
-        if (process.env.NODE_ENV !== "production") {
-            console.log(
-            "%c" + url,
-            "color:red",
-            ",param:",
-            param,
-            ",response:",
-            response.data
-            );
-        }
-        return response.data;
+            return response.data;
         } catch (e) {
-        if (process.env.NODE_ENV !== "production") {
-            console.log(
-            "%c" + url,
-            "color:red",
-            ",param:",
-            param,
-            ",response:",
-            "服务器异常，请稍后重试"
-            );
-        }
-        return { code: "error", msg: "服务器异常，请稍后重试" };
+            return { code: "error", msg: "服务器异常，请稍后重试" };
         }
     },
 
