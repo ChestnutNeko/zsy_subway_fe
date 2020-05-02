@@ -12,7 +12,6 @@ class LostProperty extends Component {
     render() {
         return(
             <div className='lost-property'>
-                
             </div>
         )
     }
