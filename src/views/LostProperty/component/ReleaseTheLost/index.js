@@ -16,8 +16,15 @@ class ReleaseTheLost extends Component {
         }
     }
 
-    onDateChange = () => {
-        console.log('onDateChange')
+    onDateChange = (now) => {
+        console.log(now);
+        // 中国区的时间格式
+        let time = new Date()
+        console.log(time);
+        let d = new Date(time);
+        // 格式转换
+        let dateValue = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        console.log(dateValue);
     }
 
     // 确认
@@ -74,7 +81,7 @@ class ReleaseTheLost extends Component {
                             </Select>
                         </Form.Item> */}
                         <Form.Item label={<div><span className='red-star'>*&nbsp;</span>拾到时间</div>} rules={[{ required: true, message: '请输入拾到时间' }]}>
-                            <DatePicker onChange={this.onDateChange()} style={{ width: 300 }} />
+                            <DatePicker onChange={this.onDateChange()} format="YYYY-MM-DD" style={{ width: 300 }} />
                         </Form.Item>
                         <Form.Item label={<div><span className='red-star'>*&nbsp;</span>领取点&nbsp;<Tooltip placement='bottom' title={<div>请输入物品暂存地铁站<br/>有疑问请咨询站内工作人员</div>}><InfoCircleOutlined /></Tooltip></div>} rules={[{ required: true, message: '请输入领取点' }]}>
                             <Input placeholder='请输入领取点' style={{ width: 300 }} />
