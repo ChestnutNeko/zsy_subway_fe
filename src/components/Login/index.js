@@ -23,7 +23,8 @@ class Login extends Component {
                 password: values.password
             }, res => {
                 if(res.data) {
-                    message.success(res.msg);
+                    message.success(res.data);
+                    console.log('sfda')
                 } else {
                     message.warn(res.msg);
                 }

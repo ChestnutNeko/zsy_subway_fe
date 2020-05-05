@@ -19,32 +19,32 @@ class UserManagement extends Component {
         this.state = {
             dataSource: [],
             columns: [{
-                title: '编号',
-                dataIndex: 'id',
-                key: 'id'
-            }, {
                 title: '用户id',
-                dataIndex: 'userId',
+                dataIndex: 'user_id',
                 key: 'userId'
             }, {
                 title: '用户名',
-                dataIndex: 'userName',
+                dataIndex: 'user_name',
                 key: 'userName'
             }, {
+                title: '用户类型',
+                dataIndex: 'user_type',
+                key: 'userType'
+            }, {
                 title: '所在地区',
-                dataIndex: 'userPosition',
-                key: 'userPosition'
+                dataIndex: 'user_city',
+                key: 'userCity'
             }, {
                 title: '联系电话',
-                dataIndex: 'userPhone',
-                key: 'userPhone'
+                dataIndex: 'user_telephone',
+                key: 'userTelephone'
             }, {
                 title: '邮箱',
-                dataIndex: 'userEmail',
+                dataIndex: 'user_email',
                 key: 'userEmail'
             }, {
                 title: '常乘地铁',
-                dataIndex: 'userSubway',
+                dataIndex: 'user_subway',
                 key: 'userSubway'
             }, {
                 title: '操作',
@@ -54,7 +54,6 @@ class UserManagement extends Component {
                     return(
                         <div>
                             <Button type='primary'>详情</Button>
-                            <Button type='primary'>审批通过</Button>
                         </div>
                     )
                 }
@@ -70,7 +69,8 @@ class UserManagement extends Component {
 
     componentDidMount() {
         this.drawEcharts();
-        this.allUserList();
+        // this.allUserList();
+        this.allUserInfo();
     }
 
     drawEcharts = () => {
@@ -122,6 +122,15 @@ class UserManagement extends Component {
         this.setState({
             userName: value
         }, () => this.allUserList());
+    }
+
+    allUserInfo = () => {
+        this.props.allUserList({}, res => {
+            console.log('res')
+            this.setState({
+                dataSource: res.list
+            })
+        })
     }
 
     allUserList = (page = 1, pageSize = 10) => {
