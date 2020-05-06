@@ -1,11 +1,28 @@
 .home-text {
-    height: 50px;
     width: 100%;
     background-color: #fff;
 }
 .home-text-header {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .home-text-header-hello {
-    
+    background-color: #364d79;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1.25;
+    padding: 0 4px;
+}
+.home-text-header-system {
+    background-color: #364d79;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1.25;
+    padding: 0 4px;
+}
+.home-text-body {
+    margin: 10px 30px;
+    color: #3d7e9a;
+    text-decoration: none;
 }

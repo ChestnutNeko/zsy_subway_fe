@@ -6,7 +6,12 @@ import { Breadcrumb, Carousel, Tabs } from 'antd';
 import './index.css';
 import CardTicket from './component/CardTicket';
 import AlipayTicket from './component/AlipayTicket';
+import VxTicket from './component/VxTicket';
+import AppTicket from './component/AppTicket';
 import subway1 from '../../assets/images/subway1.jpg';
+import subway2 from '../../assets/images/subway2.jpg';
+import subway3 from '../../assets/images/subway3.jpg';
+import subway4 from '../../assets/images/subway4.jpg';
 const { TabPane } = Tabs;
 
 class SubwayTicket extends Component {
@@ -27,16 +32,16 @@ class SubwayTicket extends Component {
                     <div>
                         <Carousel autoplay>
                             <div>
-                                <h3><img src={subway1} alt='地铁图'></img></h3>
+                                <h3><img src={subway4} alt='地铁图'></img></h3>
                             </div>
                             <div>
-                                <h3>2</h3>
+                                <h3>沈阳地铁：十号线4月29日开通运营</h3>
                             </div>
                             <div>
-                                <h3>3</h3>
+                                <h3><img src={subway2} alt='地铁图'></img></h3>
                             </div>
                             <div>
-                                <h3>4</h3>
+                                <h3>北京地铁：“五一”节日期间部分车站封站</h3>
                             </div>
                         </Carousel>
                     </div>
@@ -49,10 +54,10 @@ class SubwayTicket extends Component {
                                 <AlipayTicket />
                             </TabPane>
                             <TabPane tab="微信小程序" key="3">
-                            Content of Tab Pane 3
+                                <VxTicket />
                             </TabPane>
                             <TabPane tab="地铁APP" key="4">
-                            Content of Tab Pane 3
+                                <AppTicket />
                             </TabPane>
                         </Tabs>
                     </div>

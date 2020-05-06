@@ -1,0 +1,30 @@
+.app-ticket-use {
+    margin-left: 40px;
+    margin-top: 10px;
+}
+.app-ticket-use-title {
+    margin-left: 40px;
+    font-size: 16px;
+    color: #418ac3;
+    cursor: pointer;
+}
+.app-ticket-use-content {
+    margin-top: 20px;
+}
+.app-ticket-row {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #757575;
+    text-align: center;
+    margin-top: 20px;
+}
+.app-ticket-title {
+    margin-right: 20px;
+}
+.app-ticket-bar {
+    background: #e8e8e8;
+    height: 14px;
+    width: 1.2px;
+    margin-right: 20px;
+}

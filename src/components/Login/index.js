@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import './index.css';
 import bgPicture from '../../assets/images/login_bg_2.png';
-import { Link } from 'react-router-dom';
-import Home from '../../views/Home/index';
 import * as actions from '../store/action';
 import { connect } from 'react-redux';
 
@@ -25,10 +23,12 @@ class Login extends Component {
                 if(res.data) {
                     message.success(res.data);
                     console.log('sfda')
+                    this.props.history.push('/home');
                 } else {
                     message.warn(res.msg);
+                    // this.props.history.push('/home');
                 }
-            })
+            });
 
         };
         const onFinishFailed = errorInfo => {
@@ -73,7 +73,6 @@ class Login extends Component {
                                 或 <a href="">立即注册!</a>
                             </Form.Item>
                         </Form>
-                        {/* <Link to="/home"><Button type='primary'>进入首页</Button></Link> */}
                     </div>
                 </div>
             </div>
