@@ -11,6 +11,12 @@ class Login extends Component {
         this.state = {
             userId: 0,
             userName: '',
+            userPassword: '',
+            userType: -1,
+            userCity: '',
+            userTelephone: '',
+            userSubway: '',
+            userEmail: ''
         }
     }
     render() {
@@ -29,7 +35,17 @@ class Login extends Component {
             }, res => {
                 if(res.code === 0) {
                     message.success(res.msg);
-                    // this.props.history.push('/home');
+                    this.props.history.push('/home');
+                    this.setState({
+                        userId: res.user_id,
+                        userName: res.user_name,
+                        userPassword: res.user_password,
+                        userType: res.user_type,
+                        userCity: res.user_city,
+                        userTelephone: res.user_telephone,
+                        userSubway: res.user_subway,
+                        userEmail: res.user_email
+                    });
                 } else {
                     message.warn(res.msg);
                 }

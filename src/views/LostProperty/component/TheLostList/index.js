@@ -48,7 +48,7 @@ class TheLostList extends Component {
                 render: (text, record) => {
                     return(
                         <div>
-                            <Button type='primary' onClick={this.handleCollect.bind(this, record.the_lost_id, record.the_lost_name, record.the_lost_city, record.the_lost_value, record.the_lost_date, record.the_lost_position, record.the_lost_telephone)}>收藏</Button>
+                            <Button type='primary' onClick={this.handleCollect.bind(this, record.the_lost_id, record.the_lost_name, record.the_lost_city, record.the_lost_value, record.the_lost_position, record.the_lost_telephone)}>收藏</Button>
                         </div>
                     )
                 }
@@ -107,14 +107,14 @@ class TheLostList extends Component {
         });
     };
 
-    // 收藏
-    handleCollect = (theLostId, theLostName, theLostCity, theLostValue, theLostDate, theLostPosition, theLostTelephone) => {
+    // 失物收藏
+    handleCollect = (theLostId, theLostName, theLostCity, theLostValue, theLostPosition, theLostTelephone) => {
         this.props.theLostListCollect({
+            userId: 22,
             theLostId,
             theLostName,
             theLostCity,
             theLostValue,
-            theLostDate,
             theLostPosition,
             theLostTelephone
         }, res => {

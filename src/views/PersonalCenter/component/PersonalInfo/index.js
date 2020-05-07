@@ -229,15 +229,12 @@ class PersonalInfo extends Component {
             okText: '确认',
             cancelText: '取消',
             onOk() {
-                // that.setState({
-                //     spinning: true
-                // });
                 that.props.routeDelete({
                     id
                 }, res => {
                     if (res.code === 0) {
                         message.success(res.msg);
-                        that.theLostCollectList();
+                        that.getRoutesList();
                     } else {
                         message.warn(res.msg);
                         that.setState({
@@ -260,7 +257,7 @@ class PersonalInfo extends Component {
             cancelText: '取消',
             onOk() {
                 that.setState({
-                    spinning: true
+                    // spinning: true
                 });
                 that.props.theLostListDelete({id}, res => {
                     if(res.code === 0) {
@@ -478,6 +475,7 @@ class PersonalInfo extends Component {
 }
 
 const mapStateToProps = function(state) {
+    console.log('6666666666',state)
     return {};
 };
 const mapDispatchToProps = function(dispatch) {

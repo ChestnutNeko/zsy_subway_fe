@@ -247,6 +247,7 @@ class AliMap extends Component {
         });
         this.props.routeCollect({
             userId: 22,
+            userName: 'zsy',
             routesStart,
             routesEnd,
             routesName
