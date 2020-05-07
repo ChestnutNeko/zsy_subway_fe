@@ -31,6 +31,9 @@ class AppTicket extends Component {
                     <div className='app-ticket-row'><div className='app-ticket-title'>上海地铁</div><div className='app-ticket-bar'></div><div>Metro大都会</div></div>
                     <div className='app-ticket-row'><div className='app-ticket-title'>广州地铁</div><div className='app-ticket-bar'></div><div>广州地铁</div></div>
                     <div className='app-ticket-row'><div className='app-ticket-title'>深圳地铁</div><div className='app-ticket-bar'></div><div>深圳通</div></div>
+                    <div className='app-ticket-row'><div className='app-ticket-title'>苏州地铁</div><div className='app-ticket-bar'></div><div>苏e行</div></div>
+                    <div className='app-ticket-row'><div className='app-ticket-title'>天津地铁</div><div className='app-ticket-bar'></div><div>天津地铁</div></div>
+                    <div className='app-ticket-row'><div className='app-ticket-title'>青岛地铁</div><div className='app-ticket-bar'></div><div>青岛地铁</div></div>
                 </div>
             </div>
         )

@@ -129,8 +129,8 @@ class UserManagement extends Component {
             console.log('res')
             this.setState({
                 dataSource: res.list
-            })
-        })
+            });
+        });
     }
 
     allUserList = (page = 1, pageSize = 10) => {

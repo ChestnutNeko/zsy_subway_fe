@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import { Map, Marker } from 'react-amap';
 import { Input, Button, Modal, message } from 'antd';
 import './index.css';
+import * as actions from '../../store/action';
+import { connect } from 'react-redux';
 
 class AliMap extends Component {
     constructor(props) {
@@ -239,10 +241,22 @@ class AliMap extends Component {
     }
 
     handleCollectOk = () => {
+        const { routesStart, routesEnd, routesName } = this.state;
         this.setState({
             visible: false
         });
-        message.success('收藏成功，请到个人中心查看');
+        this.props.routeCollect({
+            userId: 22,
+            routesStart,
+            routesEnd,
+            routesName
+        }, res => {
+            if(res.code === 0) {
+                message.success(res.msg);
+            } else {
+                message.warning(res.msg);
+            }
+        });
     }
 
     handleCollectCancel = () => {
@@ -325,5 +339,14 @@ class AliMap extends Component {
         )
     }
 }
-
-export default AliMap;
+const mapStateToProps = function(state) {
+    return {}
+}
+const mapDispatchToProps = function(dispatch) {
+    return {
+        routeCollect(params, cb) {
+            dispatch(actions.routeCollect(params, cb));
+        }
+    }
+} 
+export default connect(mapStateToProps, mapDispatchToProps)(AliMap);

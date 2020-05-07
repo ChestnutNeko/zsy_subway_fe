@@ -11,3 +11,9 @@ export const theLostListAdd = (params, cb) => async dispatch => {
     let response = await http.requestPost(http.theLostListAdd, params);
     cb && cb(response);
 }
+
+// 失物收藏
+export const theLostListCollect = (params, cb) => async dispatch => {
+    let response = await http.requestPost(http.theLostListCollect, params);
+    cb && cb(response);
+}

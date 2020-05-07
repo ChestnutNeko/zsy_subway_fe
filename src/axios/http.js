@@ -28,10 +28,10 @@ export default {
     userInfo: 'user_info', // 个人信息（查）
     userInfoUpdate: 'update_user', // 个人信息修改（改）
 
-    theLostCollectList: 'get_routes_list', // 收藏失物列表（查）
+    routeCollectList: 'get_routes_list', // 收藏失物列表（查）
     theLostListDelete: 'delete_losts', // 失物取消收藏（删）
 
-    routeCollectList: 'collect_goods_list', // 收藏路线列表（查）
+    theLostCollectList: 'collect_goods_list', // 收藏路线列表（查）
     routeDelete: 'delete_routes', // 路线取消收藏（删）
 
     allUserList: 'all_info', // 管理员查看用户信息（查）

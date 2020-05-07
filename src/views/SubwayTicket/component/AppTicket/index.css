@@ -1,6 +1,6 @@
 .app-ticket-use {
     margin-left: 40px;
-    margin-top: 10px;
+    margin: 20px;
 }
 .app-ticket-use-title {
     margin-left: 40px;
@@ -9,7 +9,7 @@
     cursor: pointer;
 }
 .app-ticket-use-content {
-    margin-top: 20px;
+    margin: 20px;
 }
 .app-ticket-row {
     display: flex;

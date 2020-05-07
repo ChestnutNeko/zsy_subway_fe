@@ -32,6 +32,7 @@ class AlipayTicket extends Component {
                             <Step title="城市服务" description="支付宝首页点击“更多”图标进入" />
                             <Step title="交通出行" description="在“城市服务”中找到“服务分类”，分类中点击进入“交通出行”" />
                             <Step title="地铁购票" description="“公共交通”中选择“地铁购票”" />
+                            <Step title="乘车" description="扫码乘车" />
                         </Steps>
                     </div>
                 </div>

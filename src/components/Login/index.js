@@ -6,6 +6,13 @@ import * as actions from '../store/action';
 import { connect } from 'react-redux';
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userId: 0,
+            userName: '',
+        }
+    }
     render() {
         const layout = {
             labelCol: { span: 8 },
@@ -20,13 +27,11 @@ class Login extends Component {
                 username: values.username,
                 password: values.password
             }, res => {
-                if(res.data) {
-                    message.success(res.data);
-                    console.log('sfda')
-                    this.props.history.push('/home');
+                if(res.code === 0) {
+                    message.success(res.msg);
+                    // this.props.history.push('/home');
                 } else {
                     message.warn(res.msg);
-                    // this.props.history.push('/home');
                 }
             });
 

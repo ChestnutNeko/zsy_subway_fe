@@ -1,12 +1,11 @@
 /**
  * 个人信息
  */
+
 import React, { Component } from 'react';
 import './index.css';
 import { Breadcrumb, Avatar, Tooltip, Button, Modal, Input, Table, message, Spin } from 'antd';
 import { LoadingOutlined, UserOutlined, WomanOutlined, HomeOutlined, PhoneOutlined, BranchesOutlined, MailOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import '../../../../mock/mock';
 import { connect } from 'react-redux';
 import * as actions from '../../store/action';
 import PaginationUi from '../../../../components/PaginationUi';
@@ -20,6 +19,7 @@ class PersonalInfo extends Component {
         this.state = {
             spinning: false,
             avatar: '',
+            id: 12,
             name: '喵喵一十八',
             password: '123456',
             address: '未填写所在地区',
@@ -31,10 +31,6 @@ class PersonalInfo extends Component {
                 title: '编号',
                 dataIndex: 'routes_id',
                 key: 'routesId',
-            }, {
-                title: '用户名',
-                dataIndex: 'user_name',
-                key: 'userName'
             }, {
                 title: 
                 <div>路线名&nbsp;
@@ -59,7 +55,7 @@ class PersonalInfo extends Component {
                 render: (text, record) => {
                     return(
                         <div>
-                            <Button type='primary' onClick={this.handleSubwayCancel.bind(this, record.id)}>取消收藏</Button>
+                            <Button type='primary' onClick={this.handleSubwayCancel.bind(this, record.routes_id)}>取消收藏</Button>
                         </div>
                     )
                 }
@@ -70,32 +66,36 @@ class PersonalInfo extends Component {
             routesPages: 0, // 总页数
             columnsLost: [{
                 title: '编号',
-                dataIndex: 'goods_id',
-                key: 'goodsId',
+                dataIndex: 'id',
+                key: 'id',
             }, {
-                title: '用户编号',
-                dataIndex: 'user_id',
-                key: 'user_id'
+                title: '失物编号',
+                dataIndex: 'the_lost_id',
+                key: 'the_lost_id'
             }, {
                 title: '名称',
-                dataIndex: 'goods_name',
-                key: 'goodsName',
+                dataIndex: 'the_lost_name',
+                key: 'the_lost_name',
             }, {
                 title: '城市',
                 dataIndex: 'the_lost_city',
                 key: 'the_lost_city',
             }, {
                 title: '预估金额（元）',
-                dataIndex: 'goods_value',
-                key: 'goodsValue',
+                dataIndex: 'the_lost_value',
+                key: 'the_lost_value',
+            }, {
+                title: '日期',
+                dataIndex: 'the_lost_date',
+                key: 'the_lost_date'
             }, {
                 title: '领取点',
-                dataIndex: 'goodsLocation',
-                key: 'goodsLocation',
+                dataIndex: 'the_lost_position',
+                key: 'the_lost_position',
             }, {
                 title: '领取点电话',
-                dataIndex: 'goodsTelephone',
-                key: 'goodsTelephone',
+                dataIndex: 'the_lost_telephone',
+                key: 'the_lost_telephone',
             }, {
                 title: '功能操作',
                 dataIndex: 'operation',
@@ -103,7 +103,7 @@ class PersonalInfo extends Component {
                 render: (text, record) => {
                     return(
                         <div>
-                            <Button type='primary' onClick={this.handleLostCancel.bind(this, record.goodsId)}>取消收藏</Button>
+                            <Button type='primary' onClick={this.handleLostCancel.bind(this, record.id)}>取消收藏</Button>
                         </div>
                     )
                 }
@@ -118,7 +118,6 @@ class PersonalInfo extends Component {
     }
 
     componentDidMount() {
-        // this.getPersonalLostList();
         // this.theLostCollectList();
         this.getRoutesList();
         this.collectGoodsList();
@@ -142,20 +141,30 @@ class PersonalInfo extends Component {
         });
     }
 
+    // 收藏路线列表(yes)
     getRoutesList = () => {
+        this.setState({
+            loading: true,
+        });
         this.props.routeCollectList({}, res => {
             this.setState({
-                dataSourceSubway: res.data
-            })
-        })
+                dataSourceSubway: res.data,
+                loading: false
+            });
+        });
     }
 
+    // 收藏失物列表(yes)
     collectGoodsList = () => {
+        this.setState({
+            loading: true,
+        });
         this.props.theLostCollectList({}, res => {
             this.setState({
-                dataSourceLost: res.data
-            })
-        })
+                dataSourceLost: res.data,
+                loading: false
+            });
+        });
     }
 
     // 收藏路线列表
@@ -210,15 +219,6 @@ class PersonalInfo extends Component {
         });
     }
 
-    // 失物列表mockjs
-    getPersonalLostList = () => {
-        axios.post('/\/get_personal_lost_list.mock/', {dataType:'json'}).then(res => {
-            this.setState({
-                dataSourceLost: res.data.data.get_personal_lost_list
-            });
-        });
-    }
-
     // 路线取消收藏
     handleSubwayCancel = id => {
         let that = this;
@@ -229,17 +229,20 @@ class PersonalInfo extends Component {
             okText: '确认',
             cancelText: '取消',
             onOk() {
-                this.setState({
-                    spinning: true
-                });
-                this.props.routeDelete({
-                    id,
+                // that.setState({
+                //     spinning: true
+                // });
+                that.props.routeDelete({
+                    id
                 }, res => {
-                    if (res.body) {
+                    if (res.code === 0) {
                         message.success(res.msg);
-                        // that.subwayList();
+                        that.theLostCollectList();
                     } else {
                         message.warn(res.msg);
+                        that.setState({
+                            spinning: false
+                        });
                     }
                 });
             },
@@ -256,14 +259,18 @@ class PersonalInfo extends Component {
             okText: '确认',
             cancelText: '取消',
             onOk() {
-                this.setState({
+                that.setState({
                     spinning: true
                 });
-                this.props.theLostListDelete({id}, res => {
-                    if(res.body) {
+                that.props.theLostListDelete({id}, res => {
+                    if(res.code === 0) {
                         message.success(res.msg);
+                        that.collectGoodsList();
                     } else {
                         message.warn(res.msg);
+                        that.setState({
+                            spinning: false
+                        });
                     }
                 });
             },
@@ -279,7 +286,6 @@ class PersonalInfo extends Component {
 
     // 修改信息确认
     handleInfoOk = () => {
-        console.log('ok');
         const { id, name, password, address, telephone, subway, email} = this.state;
         this.props.userInfoUpdate({
             id,
@@ -290,8 +296,13 @@ class PersonalInfo extends Component {
             subway,
             email
         }, res => {
-            if(res.body) {
-                message.success('成功');
+            if(res.code === 0) {
+                message.success(res.msg);
+                this.setState({
+                    visible: false
+                });
+            } else {
+                message.warn(res.msg);
                 this.setState({
                     visible: false
                 });
@@ -426,14 +437,15 @@ class PersonalInfo extends Component {
                                 <Table 
                                     dataSource={dataSourceSubway}
                                     columns={columnsSubway}
-                                    rowKey={record => record.routesId}
-                                    pagination={false} />
-                                <PaginationUi
+                                    rowKey={record => record.routes_id}
+                                    // pagination={false} 
+                                />
+                                {/* <PaginationUi
                                     page={routesPage}
                                     pageSize={routesPageSize}
                                     totalNum={routesTotalNum}
                                     pages={routesPages}
-                                    onShowSizeChange={this.theLostCollectList} />
+                                    onShowSizeChange={this.theLostCollectList} /> */}
                             </div>
                         </div>
                         <div className='personal-info-lost'>
@@ -449,13 +461,13 @@ class PersonalInfo extends Component {
                                 <Table 
                                     dataSource={dataSourceLost} 
                                     columns={columnsLost} 
-                                    rowKey={record => record.goodsId} />
-                                <PaginationUi
+                                    rowKey={record => record.the_lost_id} />
+                                {/* <PaginationUi
                                     page={goodsPage}
                                     pageSize={goodsPageSize}
                                     totalNum={goodsTotalNum}
                                     pages={goodsPages}
-                                    onShowSizeChange={this.routeCollectList} />
+                                    onShowSizeChange={this.routeCollectList} /> */}
                             </div>
                         </div>
                     </div>

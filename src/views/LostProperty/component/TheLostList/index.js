@@ -4,10 +4,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Input, Table, Button, message } from 'antd';
 import './index.css';
-import axios from "axios";
-// import '../../../../mock/mock';
 import { connect } from 'react-redux';
-// import  * as http from '../../store/action';
 import * as actions from '../../store/action';
 import PaginationUi from '../../../../components/PaginationUi';
 const { Search } = Input;
@@ -18,31 +15,31 @@ class TheLostList extends Component {
         this.state = {
             columns: [{
                 title: '失物编号',
-                dataIndex: 'theLostId',
+                dataIndex: 'the_lost_id',
                 key: 'theLostId',
             }, {
                 title: '失物名称',
-                dataIndex: 'theLostName',
+                dataIndex: 'the_lost_name',
                 key: 'theLostName',
             }, {
                 title: '城市',
-                dataIndex: 'theLostCity',
+                dataIndex: 'the_lost_city',
                 key: 'theLostCity',
             }, {
                 title: '预估金额（元）',
-                dataIndex: 'theLostValue',
+                dataIndex: 'the_lost_value',
                 key: 'theLostValue',
             }, {
                 title: '日期',
-                dataIndex: 'theLostDate',
+                dataIndex: 'the_lost_date',
                 key: 'theLostDate',
             }, {
                 title: '领取点',
-                dataIndex: 'theLostPosition',
+                dataIndex: 'the_lost_position',
                 key: 'theLostPosition',
             }, {
                 title: '领取点电话',
-                dataIndex: 'theLostTelephone',
+                dataIndex: 'the_lost_telephone',
                 key: 'theLostTelephone',
             }, {
                 title: '功能操作',
@@ -51,7 +48,7 @@ class TheLostList extends Component {
                 render: (text, record) => {
                     return(
                         <div>
-                            <Button type='primary' onClick={this.handleCollect.bind(this, record.theLostId)}>收藏</Button>
+                            <Button type='primary' onClick={this.handleCollect.bind(this, record.the_lost_id, record.the_lost_name, record.the_lost_city, record.the_lost_value, record.the_lost_date, record.the_lost_position, record.the_lost_telephone)}>收藏</Button>
                         </div>
                     )
                 }
@@ -68,18 +65,17 @@ class TheLostList extends Component {
     }
 
     componentDidMount() {
-        // this.getTheLostList();
-        this.theLostList();
+        // this.theLostList();
+        this.getTheLostList();
     }
 
-    // 失物一览列表mock.js
-    // getTheLostList = () => {
-    //     axios.get('/\/get_the_lost_list.mock/', {dataType:'json'}).then(res => {
-    //         this.setState({
-    //             dataSource: res.data.data.get_the_lost_list
-    //         });
-    //     });
-    // }
+    getTheLostList = () => {
+        this.props.theLostList({}, res => {
+            this.setState({
+                dataSource: res.data
+            });
+        });
+    }
     
     // 失物一览
     theLostList = (page = 1, pageSize = 10) => {
@@ -112,8 +108,22 @@ class TheLostList extends Component {
     };
 
     // 收藏
-    handleCollect = id => {
-        message.success('收藏成功，请到个人中心查看');
+    handleCollect = (theLostId, theLostName, theLostCity, theLostValue, theLostDate, theLostPosition, theLostTelephone) => {
+        this.props.theLostListCollect({
+            theLostId,
+            theLostName,
+            theLostCity,
+            theLostValue,
+            theLostDate,
+            theLostPosition,
+            theLostTelephone
+        }, res => {
+            if(res.code === 0) {
+                message.success(res.msg);
+            } else {
+                message.warning(res.msg)
+            }
+        })
     }
 
     // 按名称搜索
@@ -124,10 +134,6 @@ class TheLostList extends Component {
         }, () => {
             this.theLostList();
         });
-    }
-
-    handleSearchCity = () => {
-        console.log('city');
     }
 
     handleTableChange = () => {
@@ -151,29 +157,23 @@ class TheLostList extends Component {
                                     onSearch={this.handleSearchName}
                                 />
                             </div>
-                            {/* <div className='the-lost-list-content-search-city'>
-                                <Search
-                                    placeholder='请选择城市'
-                                    onSearch={this.handleSearchCity}
-                                />
-                            </div> */}
                         </div>
                     </div>
                     <div className='the-lost-list-table'>
                         <Table 
                             dataSource={dataSource} 
                             columns={columns} 
-                            rowKey={record => record.goodsId} 
-                            pagination={false} 
+                            rowKey={record => record.the_lost_id} 
+                            // pagination={false} 
                             loading={loading}
                             onChange={this.handleTableChange}
-                        />
-                        <PaginationUi
-                            page={page}
-                            pageSize={pageSize}
-                            pages={pages}
-                            totalNum={totalNum}
-                            onShowSizeChange={this.theLostList}
+                        // />
+                        // <PaginationUi
+                        //     page={page}
+                        //     pageSize={pageSize}
+                        //     pages={pages}
+                        //     totalNum={totalNum}
+                        //     onShowSizeChange={this.theLostList}
                         />
                     </div>
                 </div>
@@ -189,6 +189,9 @@ const mapDispatchToProps = function(dispatch) {
     return {
         theLostList(params, cb) {
             dispatch(actions.theLostList(params, cb));
+        },
+        theLostListCollect(params, cb) {
+            dispatch(actions.theLostListCollect(params, cb));
         },
     };
 };
