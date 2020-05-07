@@ -1,6 +1,6 @@
 import http from '../../../axios/http';
 
-// 获取收藏路线列表
+// 获取收藏失物列表
 export const theLostCollectList = (params, cb) => async dispatch => {
     let response = await http.requestPost(http.theLostCollectList, params);
     cb && cb(response);
@@ -12,7 +12,7 @@ export const routeDelete = (params, cb) => async dispatch => {
     cb && cb(response);
 }
 
-// 获取失物收藏列表
+// 获取收藏路线列表
 export const routeCollectList = (params, cb) => async dispatch => {
     let response = await http.requestPost(http.routeCollectList, params);
     cb && cb(response);

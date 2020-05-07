@@ -20,65 +20,38 @@ class PersonalInfo extends Component {
         this.state = {
             spinning: false,
             avatar: '',
-            avatarTip: '',
-            avatarTipShow: false,
             name: '喵喵一十八',
-            nameTip: '',
-            nameTipShow: false,
             password: '123456',
-            passwordTip: '',
-            passwordTipShow: false,
             address: '未填写所在地区',
-            addressTip: '',
-            addressTipShow: false,
             telephone: '18800129921',
-            telephoneTip: '',
-            telephoneTipShow: false,
             subway: '未填写常乘地铁',
-            subwayTip: '',
-            subwayTipShow: false,
             email: '未填写联系邮箱',
-            emailTip: '',
-            emailTipShow: false,
-            visible: false,
-            dataSourceSubway: [{
-                id: 200409,
-                userId: 123,
-                userName: '莉兹Liz',
-                userPosition: '魔仙堡',
-                userEmail: '123456@qq.com',
-                userPhone: '18899990000',
-                userSubway: '经海路-荣昌东街'
-            }],
+            dataSourceSubway: [],
             columnsSubway: [{
                 title: '编号',
-                dataIndex: 'routesId',
+                dataIndex: 'routes_id',
                 key: 'routesId',
             }, {
                 title: '用户名',
-                dataIndex: 'userName',
+                dataIndex: 'user_name',
                 key: 'userName'
             }, {
                 title: 
                 <div>路线名&nbsp;
-                    <Tooltip placement='bottom' title='111'>
+                    <Tooltip placement='bottom' title='自定义'>
                         <InfoCircleOutlined />
                     </Tooltip>
                 </div>,
-                dataIndex: 'routesName',
+                dataIndex: 'routes_name',
                 key: 'routesName'
             }, {
                 title: '起始点',
-                dataIndex: 'routesStart',
+                dataIndex: 'routes_start',
                 key: 'routesStart'
             }, {
                 title: '终点',
-                dataIndex: 'routesEnd',
+                dataIndex: 'routes_end',
                 key: 'routesEnd'
-            }, {
-                title: '地区',
-                dataIndex: 'routesPosiotion',
-                key: 'routesPosiotion'
             }, {
                 title: '功能操作',
                 dataIndex: 'operation',
@@ -97,19 +70,23 @@ class PersonalInfo extends Component {
             routesPages: 0, // 总页数
             columnsLost: [{
                 title: '编号',
-                dataIndex: 'goodsId',
+                dataIndex: 'goods_id',
                 key: 'goodsId',
             }, {
+                title: '用户编号',
+                dataIndex: 'user_id',
+                key: 'user_id'
+            }, {
                 title: '名称',
-                dataIndex: 'goodsName',
+                dataIndex: 'goods_name',
                 key: 'goodsName',
             }, {
                 title: '城市',
-                dataIndex: 'goodsCity',
-                key: 'goodsCity',
+                dataIndex: 'the_lost_city',
+                key: 'the_lost_city',
             }, {
                 title: '预估金额（元）',
-                dataIndex: 'goodsValue',
+                dataIndex: 'goods_value',
                 key: 'goodsValue',
             }, {
                 title: '领取点',
@@ -142,7 +119,9 @@ class PersonalInfo extends Component {
 
     componentDidMount() {
         // this.getPersonalLostList();
-        this.theLostCollectList();
+        // this.theLostCollectList();
+        this.getRoutesList();
+        this.collectGoodsList();
     }
 
     // 个人信息
@@ -161,6 +140,22 @@ class PersonalInfo extends Component {
                 email: res.data.email
             });
         });
+    }
+
+    getRoutesList = () => {
+        this.props.routeCollectList({}, res => {
+            this.setState({
+                dataSourceSubway: res.data
+            })
+        })
+    }
+
+    collectGoodsList = () => {
+        this.props.theLostCollectList({}, res => {
+            this.setState({
+                dataSourceLost: res.data
+            })
+        })
     }
 
     // 收藏路线列表
