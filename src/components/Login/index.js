@@ -19,6 +19,15 @@ class Login extends Component {
             userEmail: ''
         }
     }
+
+    componentDidMount() {
+        this.getLoginInfo()
+    }
+
+    getLoginInfo = () => {
+        console.log('112312423', this.state.userName)
+    }
+    
     render() {
         const layout = {
             labelCol: { span: 8 },
@@ -45,6 +54,14 @@ class Login extends Component {
                         userTelephone: res.user_telephone,
                         userSubway: res.user_subway,
                         userEmail: res.user_email
+                    }, () => {
+                        this.getLoginInfo()
+                        console.log('11111')
+                        const { userInfo } = {
+                            userId: this.state.userId,
+                            userName: this.state.userName
+                        }
+                        console.log('aaa11111', this.state.userId, userInfo)
                     });
                 } else {
                     message.warn(res.msg);
@@ -100,7 +117,9 @@ class Login extends Component {
         )
     }
 }
-
+export const xuserLogin = ({userName, userPassword}) => ({
+    userPassword
+});
 const mapStateToProps = function(state) {
     return {}
 }

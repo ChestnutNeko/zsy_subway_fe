@@ -20,7 +20,7 @@ class PersonalInfo extends Component {
             spinning: false,
             avatar: '',
             id: 12,
-            name: '喵喵一十八',
+            name: 'zsy',
             password: '123456',
             address: '未填写所在地区',
             telephone: '18800129921',
