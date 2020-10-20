@@ -9,6 +9,7 @@ import SubwayTicket from '../../views/SubwayTicket';
 import PersonalCenter from '../../views/PersonalCenter';
 import PersonalInfo from '../../views/PersonalCenter/component/PersonalInfo';
 import UserManagement from '../../views/PersonalCenter/component/UserManagement';
+import Demo from '../../views/Demo';
 import { HomeOutlined, BranchesOutlined, PayCircleOutlined, WhatsAppOutlined, UserOutlined } from '@ant-design/icons';
 
 const initRouter = {
@@ -85,7 +86,15 @@ const initRouter = {
                     hidden: false
                 }
             ]
-        }
+        }, {
+            path: '/demo',
+            component: Demo,
+            key: 'demo',
+            name: 'DEMO',
+            icon: <HomeOutlined />,
+            roleList: [-1, 1, 2], // -1:未登录;1:用户（已登录）;2:管理员（已登录）
+            isChild: false
+        },
     ]
 }
 
