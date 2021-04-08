@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Breadcrumb } from 'antd';
-import './index.css';
+import './index.scss';
 import AliMap from './component/AliMap';
 
 class SubwayRoute extends Component {

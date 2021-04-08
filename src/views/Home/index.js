@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Breadcrumb } from 'antd';
-import './index.css';
+import './index.scss';
 import HomeText from './component/HomeText';
 import HomeMap from './component/HomeMap';
 

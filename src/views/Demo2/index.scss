@@ -1,0 +1,14 @@
+.table-style {
+    background-color: #fff;
+    margin: 0 20px;
+    &-dust {
+        background-color: antiquewhite;
+    }
+    .ant-table-thead > tr > th {
+        font-weight: bold;
+        color: #364d79;
+    }
+    .ant-table-tbody > tr > td {
+        color: #364d79;
+    }
+}

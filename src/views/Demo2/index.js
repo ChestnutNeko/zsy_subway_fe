@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Table } from 'antd';
-import './index.css';
+import './index.scss';
 import * as util from '../../assets/js/utils.js';
 const setRow = (value, record) => {
 	const obj = {

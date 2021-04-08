@@ -11,6 +11,7 @@ import PersonalInfo from '../../views/PersonalCenter/component/PersonalInfo';
 import UserManagement from '../../views/PersonalCenter/component/UserManagement';
 import Demo from '../../views/Demo';
 import Demo2 from '../../views/Demo2';
+import Demo3 from '../../views/Demo3';
 import { HomeOutlined, BranchesOutlined, PayCircleOutlined, WhatsAppOutlined, UserOutlined } from '@ant-design/icons';
 
 const initRouter = {
@@ -102,6 +103,14 @@ const initRouter = {
             name: 'DEMO2',
             icon: <HomeOutlined />,
             roleList: [-1, 1, 2], // -1:未登录;1:用户（已登录）;2:管理员（已登录）
+            isChild: false
+        }, {
+            path: '/demo3',
+            component: Demo3,
+            key: 'demo3',
+            name: 'DEMO3',
+            icon: <HomeOutlined />,
+            roleList: [-1, 1, 2],
             isChild: false
         },
     ]
