@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './index.scss';
+import * as util from '../../assets/js/utils.js';
 
 class Demo3 extends Component {
     constructor(props) {
@@ -69,11 +70,17 @@ class Demo3 extends Component {
     render() {
         const { brr } = this.state;
         return(
-            <div className='demo3'>{brr.map(index => {
-                return(<div className='demo3-content'>
-                    {index.id}
-                </div>)
-            })}</div>
+            <div className='demo3' style={{backgroundImage: `url(${util.waterMark('Liz')})`}}>
+                {brr.map(index => {
+                    return(<div className='demo3-content'>
+                        {index.id}
+                    </div>)
+                })}
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="210">
+                    <polygon points="100,10 40,200 190,80 10,80 160,200"
+                    style={{fill:'pink',stroke:'lightblue',strokeWidth:5,fillRule:'evenodd'}} />
+                </svg>
+            </div>
         )
     }
 }

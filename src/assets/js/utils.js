@@ -30,3 +30,20 @@ export const getRowSpanCount = (data, key, target) => {
     });
     return arr[target];
 }
+/**
+ * 水印
+ */
+export const waterMark = (userName) => {
+  let canvas = document.createElement('canvas');
+  let ctx = canvas.getContext('2d');
+  canvas.setAttribute('width', '180');
+  canvas.setAttribute('height', '150');
+  ctx.globalAlpha = 0.1;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = '20px Microsoft Yahei';
+  ctx.rotate((Math.PI * 25) / 180);
+  ctx.fillText(userName, 130, 50);
+  let base64Url = canvas.toDataURL();
+  return base64Url;
+}
