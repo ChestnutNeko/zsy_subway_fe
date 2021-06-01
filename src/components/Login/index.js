@@ -108,7 +108,7 @@ class Login extends Component {
                                     登录
                                 </Button>
                                 <br/><br/>
-                                或 <a href="">立即注册!</a>
+                                或 <a href="http://localhost:3000/#/home">立即注册!</a>
                             </Form.Item>
                         </Form>
                     </div>

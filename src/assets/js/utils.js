@@ -61,7 +61,8 @@ export const waterMark = (userName) => {
   var fTmp = 0.0; //临时变量
   var iFra = 0; //小数部分
   var iInt = 0; //整数部分
-  var aBuf = new Array(); //输出缓存
+  // var aBuf = new Array(); //输出缓存
+  var aBuf = []; //输出缓存
   var bPositive = true; //保存正负值标记(true:正数)
   /**
    * 输出定长字符串，不够补0
@@ -71,7 +72,8 @@ export const waterMark = (userName) => {
    */
   function funZero(iVal, iLen) {
     var sTmp = iVal.toString();
-    var sBuf = new Array();
+    // var sBuf = new Array();
+    var sBuf = [];
     for (var i = 0, iLoop = iLen - sTmp.length; i < iLoop; i++) sBuf.push("0");
     sBuf.push(sTmp);
     return sBuf.join("");

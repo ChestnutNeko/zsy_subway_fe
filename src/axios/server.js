@@ -5,7 +5,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 // 终止axios的fun
-let axiosToken = null;
+// let axiosToken = null;
 
 // 请求超时时间
 axios.defaults.timeout = 10000;
@@ -20,11 +20,11 @@ axios.interceptors.request.use(config => {
 });
 axios.interceptors.response.use(response => {
     // 请求完成token置空
-    axiosToken = null;
+    // axiosToken = null;
     return response;
 }, error => {
     // 请求完成token置空
-    axiosToken = null;
+    // axiosToken = null;
     // 提示信息
     // message.warn(error);
     return Promise.reject(error); // 返回接口返回的错误信息
