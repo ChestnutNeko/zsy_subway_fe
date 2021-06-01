@@ -6,7 +6,7 @@ import { Breadcrumb, Input, Table, Button, message } from 'antd';
 import './index.css';
 import { connect } from 'react-redux';
 import * as actions from '../../store/action';
-import PaginationUi from '../../../../components/PaginationUi';
+// import PaginationUi from '../../../../components/PaginationUi';
 const { Search } = Input;
 
 class TheLostList extends Component {
@@ -141,7 +141,7 @@ class TheLostList extends Component {
     }
 
     render() {
-        const { columns, dataSource, pagination, loading, totalNum, pages, pageSize, page } = this.state;
+        const { columns, dataSource, loading } = this.state;
         return(
             <div className='the-lost-list'>
                 <Breadcrumb>

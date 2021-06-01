@@ -47,3 +47,50 @@ export const waterMark = (userName) => {
   let base64Url = canvas.toDataURL();
   return base64Url;
 }
+
+/**
+ * 数字千分位格式化
+ * @public
+ * @param mixed mVal 数值
+ * @return string
+ */
+ export const formatMoney = mVal => {
+  if(!mVal){
+    return '0'
+  }
+  var fTmp = 0.0; //临时变量
+  var iFra = 0; //小数部分
+  var iInt = 0; //整数部分
+  var aBuf = new Array(); //输出缓存
+  var bPositive = true; //保存正负值标记(true:正数)
+  /**
+   * 输出定长字符串，不够补0
+   * <li>闭包函数<[表情]>
+   * @param int iVal 值
+   * @param int iLen 输出的长度
+   */
+  function funZero(iVal, iLen) {
+    var sTmp = iVal.toString();
+    var sBuf = new Array();
+    for (var i = 0, iLoop = iLen - sTmp.length; i < iLoop; i++) sBuf.push("0");
+    sBuf.push(sTmp);
+    return sBuf.join("");
+  }
+  bPositive = mVal >= 0; //取出正负号
+  fTmp = isNaN((fTmp = parseFloat(mVal))) ? 0 : Math.abs(fTmp); //[表情]制转换为绝对值数浮点
+  //所有内容用正数规则处理
+  iInt = parseInt(fTmp); //分离整数部分
+  if (!((fTmp + "").indexOf(".") === -1)) {
+    iFra = (fTmp + "").split(".")[1];
+  }
+  do {
+    aBuf.unshift(funZero(iInt % 1000, 3));
+  } while ((iInt = parseInt(iInt / 1000)));
+  aBuf[0] = parseInt(aBuf[0]).toString(); //最高段区去掉前导0
+  // 判断是否有小数位
+  if (iFra) {
+    return (bPositive ? "" : "-") + aBuf.join(",") + "." + iFra;
+  } else {
+    return (bPositive ? "" : "-") + aBuf.join(",");
+  }
+};

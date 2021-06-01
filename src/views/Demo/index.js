@@ -159,8 +159,9 @@ class Demo extends Component {
                             >
                             <div className="check-row-item-photo">
                                 <img
-                                style={{ width: '100%', height: '100%' }}
-                                src={index.imgPath}
+                                    style={{ width: '100%', height: '100%' }}
+                                    src={index.imgPath}
+                                    alt='img'
                                 />
                             </div>
                             <div className="check-row-item-text">

@@ -2,9 +2,9 @@
  * 城市级联组件
  */
 import React, { Component } from 'react';
-import httpServer from '../../axios/http';
+// import httpServer from '../../axios/http';
 import './index.css';
-import { Select, message } from 'antd';
+import { Select } from 'antd';
 const { Option } = Select;
 
 class CityCascade extends Component {

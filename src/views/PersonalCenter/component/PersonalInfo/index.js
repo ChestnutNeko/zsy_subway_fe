@@ -8,7 +8,7 @@ import { Breadcrumb, Avatar, Tooltip, Button, Modal, Input, Table, message, Spin
 import { LoadingOutlined, UserOutlined, WomanOutlined, HomeOutlined, PhoneOutlined, BranchesOutlined, MailOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../../store/action';
-import PaginationUi from '../../../../components/PaginationUi';
+// import PaginationUi from '../../../../components/PaginationUi';
 const { Search } = Input;
 const { confirm } = Modal;
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -347,8 +347,11 @@ class PersonalInfo extends Component {
 
     render() {
         const { spinning, name, password, address, telephone, subway, email, visible, 
-            dataSourceSubway, columnsSubway, routesPage, routesPageSize, routesTotalNum, routesPages,
-            dataSourceLost, columnsLost, goodsPage, goodsPageSize, goodsTotalNum, goodsPages } = this.state;
+            dataSourceSubway, columnsSubway, 
+            // routesPage, routesPageSize, routesTotalNum, routesPages,
+            dataSourceLost, columnsLost
+            // , goodsPage, goodsPageSize, goodsTotalNum, goodsPages
+         } = this.state;
         return(
             <Spin spinning={spinning} indicator={antIcon}>
                 <div className='personal-info'>

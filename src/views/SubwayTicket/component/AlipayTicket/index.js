@@ -2,7 +2,7 @@
  * 支付宝
  */
 import React, { Component } from 'react';
-import { Steps, Divider } from 'antd';
+import { Steps } from 'antd';
 import './index.css';
 import { AlipayOutlined } from '@ant-design/icons';
 const { Step } = Steps;

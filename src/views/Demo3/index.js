@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './index.scss';
 import * as util from '../../assets/js/utils.js';
+// import { Upload, Modal } from 'antd';
+import ImageShow from './components/ImageShow';
 
 class Demo3 extends Component {
     constructor(props) {
@@ -25,7 +27,32 @@ class Demo3 extends Component {
                     ]
                 },
             ],
-            brr: []
+            brr: [],
+            previewVisible: false,
+            previewImage: '',
+            previewTitle: '111',
+            fileList: [
+                {
+                    uid: '1',
+                    name: '食物',
+                    url: 'http://p2.ssl.cdn.btime.com/t01561fc7827a8162a7.jpg',
+                },
+                {
+                    uid: '2',
+                    name: '美女',
+                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                },
+                {
+                    uid: '3',
+                    name: '可爱',
+                    url: 'http://img10.360buyimg.com/n1/s350x449_jfs/t22885/10/2298886005/72134/d028a423/5b7b6ce7N44d35caf.jpg%21cc_350x449.jpg',
+                },
+                {
+                    uid: '4',
+                    name: '可爱',
+                    url: 'http://gi3.md.alicdn.com/bao/uploaded/i3/T1LifKXldiXXanarU9_102553.jpg',
+                },
+            ],
         }
     }
 
@@ -67,8 +94,27 @@ class Demo3 extends Component {
         console.log("========brr", brrCopy);
     }
 
+    // handlePreview = async file => {
+    //     // if (!file.url && !file.preview) {
+    //     //     file.preview = await getBase64(file.originFileObj);
+    //     // }
+    
+    //     this.setState({
+    //         previewImage: file.url || file.preview,
+    //         previewVisible: true,
+    //         previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
+    //     });
+    // };
+
+    onFileChange = ({ fileList }) => {
+        this.setState({ fileList });
+        console.log('===========file', fileList);
+    };
+
     render() {
-        const { brr } = this.state;
+        const { brr, fileList, 
+            // previewVisible, previewTitle, previewImage
+         } = this.state;
         return(
             <div className='demo3' style={{backgroundImage: `url(${util.waterMark('Liz')})`}}>
                 {brr.map(index => {
@@ -80,6 +126,33 @@ class Demo3 extends Component {
                     <polygon points="100,10 40,200 190,80 10,80 160,200"
                     style={{fill:'pink',stroke:'lightblue',strokeWidth:5,fillRule:'evenodd'}} />
                 </svg>
+                {/* <Upload
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={this.handlePreview}
+                    // showUploadList={{showRemoveIcon: false}}
+                    onChange={({ fileList }) => this.setState({ fileList })}
+                >
+                    {null}
+                </Upload>
+                <Modal
+                    visible={previewVisible}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={() => this.setState({ previewVisible: false })}
+                >
+                    <img alt="example" style={{ width: '100%', height: '100%' }} src={previewImage} />
+                </Modal>
+                <div style={{display: 'flex'}}>
+                    {fileList&&fileList.map(index => {
+                        return(<div key={index.uid} style={{width: 112, display: 'flex', justifyContent: 'center'}}>{index.name}</div>)
+                    })}
+                </div> */}
+                <ImageShow
+                    fileList={fileList}
+                    onFileChange={this.onFileChange.bind(this, fileList)}
+                />
             </div>
         )
     }

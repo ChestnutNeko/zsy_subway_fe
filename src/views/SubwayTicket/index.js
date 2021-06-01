@@ -8,9 +8,7 @@ import CardTicket from './component/CardTicket';
 import AlipayTicket from './component/AlipayTicket';
 import VxTicket from './component/VxTicket';
 import AppTicket from './component/AppTicket';
-import subway1 from '../../assets/images/subway1.jpg';
 import subway2 from '../../assets/images/subway2.jpg';
-import subway3 from '../../assets/images/subway3.jpg';
 import subway4 from '../../assets/images/subway4.jpg';
 const { TabPane } = Tabs;
 

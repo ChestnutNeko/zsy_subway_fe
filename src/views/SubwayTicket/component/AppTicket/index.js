@@ -2,10 +2,21 @@
  * 微信
  */
 import React, { Component } from 'react';
-import { Steps, Divider } from 'antd';
+// import { Steps } from 'antd';
 import './index.css';
-import { WechatOutlined } from '@ant-design/icons';
-const { Step } = Steps;
+// import { WechatOutlined } from '@ant-design/icons';
+// const { Step } = Steps;
+const ways = [
+    {name: '北京地铁', tool: '易通行'},
+    {name: '哈尔滨地铁', tool: '哈尔滨城市通'},
+    {name: '沈阳地铁', tool: '盛京通'},
+    {name: '上海地铁', tool: 'Metro大都会'},
+    {name: '广州地铁', tool: '广州地铁'},
+    {name: '深圳地铁', tool: '深圳通'},
+    {name: '苏州地铁', tool: '苏e行'},
+    {name: '天津地铁', tool: '天津地铁'},
+    {name: '青岛地铁', tool: '青岛地铁'},
+]
 
 class AppTicket extends Component {
     constructor(props) {
@@ -21,19 +32,17 @@ class AppTicket extends Component {
     };
 
     render() {
-        const { current } = this.state;
+        // const { current } = this.state;
         return(
             <div className='app-ticket'>
                 <div className='app-ticket-use'>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>北京地铁</div><div className='app-ticket-bar'></div><div>易通行</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>哈尔滨地铁</div><div className='app-ticket-bar'></div><div>哈尔滨城市通</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>沈阳地铁</div><div className='app-ticket-bar'></div><div>盛京通</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>上海地铁</div><div className='app-ticket-bar'></div><div>Metro大都会</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>广州地铁</div><div className='app-ticket-bar'></div><div>广州地铁</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>深圳地铁</div><div className='app-ticket-bar'></div><div>深圳通</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>苏州地铁</div><div className='app-ticket-bar'></div><div>苏e行</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>天津地铁</div><div className='app-ticket-bar'></div><div>天津地铁</div></div>
-                    <div className='app-ticket-row'><div className='app-ticket-title'>青岛地铁</div><div className='app-ticket-bar'></div><div>青岛地铁</div></div>
+                    {ways.map((item, index) => {
+                        return(<div className='app-ticket-row' key={index}>
+                            <div className='app-ticket-title'>{item.name}</div>
+                            <div className='app-ticket-bar'></div>
+                            <div>{item.tool}</div>
+                        </div>)
+                    })}
                 </div>
             </div>
         )

@@ -7,9 +7,6 @@ import './index.scss';
 import AliMap from './component/AliMap';
 
 class SubwayRoute extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return(
             <div className='subway-route'>

@@ -149,8 +149,8 @@ class AliMap extends Component {
         //地铁加载完成，执行complete事件
         //eslint-disable-next-line
         mySubway.event.on('subway.complete', (ev, info) => {
-            let id = info.id;
-            let allLineList = mySubway.getLinelist();
+            // let id = info.id;
+            // let allLineList = mySubway.getLinelist();
         });
 
         //点击站点，显示此站点的信息窗体
