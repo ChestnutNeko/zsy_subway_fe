@@ -150,7 +150,9 @@ class Demo4 extends React.PureComponent {
                   "name": "摇篮曲Lolita-心跳jsk",
                   "data": [
                     24.11
-                  ]
+                  ],
+                  "url": 'www.baidu.com',
+                  "urlName": 'jump to baidu'
                 },
                 {
                   "name": "摇篮曲Lolita-摇篮曲jsk",

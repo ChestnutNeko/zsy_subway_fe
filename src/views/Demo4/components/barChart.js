@@ -69,7 +69,17 @@ class barChart extends React.PureComponent {
 				trigger: 'item',
 				formatter: (params) => {
 					let templete = '';
-					templete=`${params.marker}${params.name}:&nbsp;${util.formatMoney(params.data)}%`;
+                    let urlName = '';
+                    let url = '';
+					for(let i=0; i<echartsData.length; i++) {
+                        if(params.name === echartsData[i].name) {
+						    urlName = echartsData[i].urlName;
+                            url = echartsData[i].url;
+                        }
+					}
+                    console.log('xxxxx', urlName);
+					templete=`${params.marker}${params.name}:&nbsp;${util.formatMoney(params.data)}%<br/>
+                        <a href=${url}>${urlName}</a>`;
 					return templete
 				},
                 alwaysShowContent: true
