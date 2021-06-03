@@ -13,6 +13,7 @@ import Demo from '../../views/Demo';
 import Demo2 from '../../views/Demo2';
 import Demo3 from '../../views/Demo3';
 import Demo4 from '../../views/Demo4';
+import MyCheckbox from '../../views/Demo5';
 import { HomeOutlined, BranchesOutlined, PayCircleOutlined, WhatsAppOutlined, UserOutlined } from '@ant-design/icons';
 
 const initRouter = {
@@ -118,6 +119,14 @@ const initRouter = {
             component: Demo4,
             key: 'demo4',
             name: 'DEMO4',
+            icon: <HomeOutlined />,
+            roleList: [-1, 1, 2],
+            isChild: false
+        }, {
+            path: '/demo5',
+            component: MyCheckbox,
+            key: 'demo5',
+            name: 'MyCheckbox',
             icon: <HomeOutlined />,
             roleList: [-1, 1, 2],
             isChild: false
