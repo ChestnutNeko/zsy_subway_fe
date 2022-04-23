@@ -3,10 +3,14 @@
  */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, ConfigProvider } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import Header from '../../src/components/header';
 import './routeView.css';
+import zh_CN from 'antd/es/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 const { Sider, Content }  = Layout;
 const { SubMenu } = Menu;
 
@@ -21,6 +25,20 @@ class RouterView extends Component {
     }
 
     componentDidMount() {
+        moment.locale('zh-cn',{
+            day: {
+				dow: 5,
+				doy: 8,
+			},
+			week: {
+				dow: 5,
+				doy: 8,
+			},
+			defaultLocaleWeek: {
+				dow: 5,
+				doy: 8,
+			},
+		});
         this.getUserInfo();
     }
 
@@ -39,53 +57,55 @@ class RouterView extends Component {
         const { indexPath, routerView } = this.props;
         return(
             <div className='router-view'>
-                <Header />
-                <Layout className='router-view-content'>
-                    <Sider className='router-view-sider' width={256}>
-                        <Menu
-                            onClick={this.handleClick}
-                            defaultSelectedKeys={[indexPath]}
-                            defaultOpenKeys={[indexPath]}
-                            mode="inline"
-                            style={{ width: 256 }}
-                        >
-                            {
-                                routerView && routerView.map((item) => {
-                                    if(item.isChild) {
-                                        return <SubMenu key={item.key} title={<span>{item.icon}{item.name}</span>}>
-                                        {
-                                            item.child.map(item_2 => {
-                                                if(item_2.hidden) {
-                                                    return null
-                                                } else {
-                                                    return <Menu.Item key={item_2.key}>{item_2.icon}{item_2.name}</Menu.Item>
-                                                }
+                <ConfigProvider locale={zh_CN}>
+                    <Header />
+                    <Layout className='router-view-content'>
+                        <Sider className='router-view-sider' width={256}>
+                            <Menu
+                                onClick={this.handleClick}
+                                defaultSelectedKeys={[indexPath]}
+                                defaultOpenKeys={[indexPath]}
+                                mode="inline"
+                                style={{ width: 256 }}
+                            >
+                                {
+                                    routerView && routerView.map((item) => {
+                                        if(item.isChild) {
+                                            return <SubMenu key={item.key} title={<span>{item.icon}{item.name}</span>}>
+                                            {
+                                                item.child.map(item_2 => {
+                                                    if(item_2.hidden) {
+                                                        return null
+                                                    } else {
+                                                        return <Menu.Item key={item_2.key}>{item_2.icon}{item_2.name}</Menu.Item>
+                                                    }
+                                                })
+                                            }
+                                            </SubMenu>
+                                        } else {
+                                            return <Menu.Item key={item.key}>{item.icon}{item.name}</Menu.Item>
+                                        }
+                                    })
+                                }
+                            </Menu>
+                        </Sider>
+                        <Content>
+                            <Switch>
+                                {
+                                    routerView && routerView.map((item) => {
+                                        if(item.isChild) {
+                                            return item.child.map(item_2 => {
+                                                return <Route exact path={item_2.path} component={item_2.component} key={item_2.key} />
                                             })
-										}
-                                        </SubMenu>
-                                    } else {
-                                        return <Menu.Item key={item.key}>{item.icon}{item.name}</Menu.Item>
-                                    }
-                                })
-                            }
-                        </Menu>
-                    </Sider>
-                    <Content>
-                        <Switch>
-                            {
-                                routerView && routerView.map((item) => {
-                                    if(item.isChild) {
-                                        return item.child.map(item_2 => {
-                                            return <Route exact path={item_2.path} component={item_2.component} key={item_2.key} />
-                                        })
-                                    } else {
-                                        return <Route exact path={item.path} component={item.component} key={item.key} />
-                                    }
-                                })
-                            }
-                        </Switch>
-                    </Content>
-                </Layout>
+                                        } else {
+                                            return <Route exact path={item.path} component={item.component} key={item.key} />
+                                        }
+                                    })
+                                }
+                            </Switch>
+                        </Content>
+                    </Layout>
+                </ConfigProvider>
             </div>
         )
     }
